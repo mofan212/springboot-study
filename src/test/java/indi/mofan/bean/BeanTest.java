@@ -1,5 +1,6 @@
 package indi.mofan.bean;
 
+import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Teacher;
 import indi.mofan.pojo.User;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * @author mofan
@@ -57,5 +59,15 @@ public class BeanTest {
         Teacher teacher = (Teacher) context.getBean("teacher");
         System.out.println("获取到的 Bean 为:" + teacher);
         System.out.println("Teacher 的 name 为:" + context.getBean(Teacher.class).getName());
+    }
+
+    @Test
+    public void testLifeCycle() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        // 注册 Bean
+        context.register(LifeCycleConfig.class);
+        context.refresh();
+        // 关闭容器，触发销毁操作
+        context.close();
     }
 }
