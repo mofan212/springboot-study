@@ -1,5 +1,6 @@
 package indi.mofan.bean;
 
+import indi.mofan.assemble.Application;
 import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Teacher;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @author mofan
  * @date 2022/10/11 19:50
  */
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 public class BeanTest {
 
     @Autowired
@@ -42,7 +43,7 @@ public class BeanTest {
          */
         System.out.println("获取到的 Bean 为:" + context.getBean(Person.class));
     }
-    
+
     @Test
     public void testImportBeanDefinitionRegistrar() {
         /*
