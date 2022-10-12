@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @date 2022/10/11 19:47
  */
 @Component
-public class UserBeanFactory implements FactoryBean<User> {
+public class UserFactoryBean implements FactoryBean<User> {
     @Override
     public User getObject() throws Exception {
         // 获取 Bean 时调用此方法

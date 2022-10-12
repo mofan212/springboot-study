@@ -1,15 +1,23 @@
 package indi.mofan.bean;
 
-import indi.mofan.assemble.Application;
+import indi.mofan.Application;
 import indi.mofan.config.LifeCycleConfig;
+import indi.mofan.config.SimpleEnableAutoConfiguration;
+import indi.mofan.pojo.Author;
+import indi.mofan.pojo.Employee;
 import indi.mofan.pojo.Person;
+import indi.mofan.pojo.Student;
 import indi.mofan.pojo.Teacher;
 import indi.mofan.pojo.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.io.support.SpringFactoriesLoader;
+
+import java.util.List;
 
 /**
  * @author mofan
@@ -70,5 +78,50 @@ public class BeanTest {
         context.refresh();
         // 关闭容器，触发销毁操作
         context.close();
+    }
+
+    @Test
+    public void testBeanPostProcessor() {
+        /*
+         * 使用  BeanPostProcessor 处理 Bean:
+         * 1. 实现 BeanPostProcessor 接口，重写其中的方法对 Bean 进行前置处理或后置处理
+         * 2. 处理后的 Bean 记得随方法返回
+         * 3. 将实现类交由 Spring 管理
+         */
+        Student student = context.getBean(Student.class);
+        System.out.println("获取到的 Bean 为:" + student);
+        System.out.println("Student 的 studentName 为:" + student.getStudentName());
+    }
+
+    @Test
+    public void testSpringSPI() {
+        /*
+         * Spring 的 SPI 机制:
+         * 1. 配置文件必须在 classpath 路径下的 META-INF 文件夹内，文件名必须为 spring.factories
+         * 2. spring.factories 文件内容为键值对，一个键可以对应多个值，使用逗号分割
+         *
+         */
+        List<String> values = SpringFactoriesLoader.loadFactoryNames(
+                SimpleEnableAutoConfiguration.class,
+                SimpleEnableAutoConfiguration.class.getClassLoader()
+        );
+        Assertions.assertTrue(values.stream().anyMatch(i -> Employee.class.getName().equals(i)));
+    }
+
+    @Test
+    public void testAutoConfiguration() {
+        /*
+         * 自定义自动装配: 在 spring.factories 文件中添加
+         *      key 为 org.springframework.boot.autoconfigure.EnableAutoConfiguration
+         *      value 为需要注入的 Bean 的类全限定名
+         * 那么 SpringBoot 就会自行将其注册到 Spring 容器中
+         */
+        System.out.println("获取到的 Bean 为: " + context.getBean(Employee.class));
+    }
+    
+    @Test
+    public void testLoadJsonSource() {
+        Author author = context.getBean(Author.class);
+
     }
 }
