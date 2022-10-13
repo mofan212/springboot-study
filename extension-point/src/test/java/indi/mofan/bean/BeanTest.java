@@ -123,7 +123,13 @@ public class BeanTest {
 
     @Test
     public void testLoadJsonSource() {
+        /*
+         * 自定义配置文件解析器：
+         * 1. 无法通过实现 PropertySourceLoader 接口，然后将实现类通过 Spring SPI 机制来实现自定义配置文件解析器
+         * 2. 因为 Spring SPI 机制中存在 cache，总是会取得缓存中的信息，而不是我们自定义的 PropertySourceLoader
+         * 3. 如果需要使用 JSON 作为配置文件，yaml 作为 JSON 的超集，直接在 yaml 文件中书写 JSON 即可，
+         */
         Author author = context.getBean(Author.class);
-
+        Assertions.assertEquals("mofan", author.getName());
     }
 }
