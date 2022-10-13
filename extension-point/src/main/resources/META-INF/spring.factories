@@ -1,9 +1,1 @@
 indi.mofan.config.SimpleEnableAutoConfiguration=indi.mofan.pojo.Employee
-
-# 自动装配
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  indi.mofan.config.SimpleConfig
-
-# 支持 JSON 格式的配置文件
-org.springframework.boot.env.PropertySourceLoader=\
-  indi.mofan.source.JsonPropertySourceLoader

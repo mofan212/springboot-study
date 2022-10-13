@@ -111,14 +111,16 @@ public class BeanTest {
     @Test
     public void testAutoConfiguration() {
         /*
-         * 自定义自动装配: 在 spring.factories 文件中添加
-         *      key 为 org.springframework.boot.autoconfigure.EnableAutoConfiguration
-         *      value 为需要注入的 Bean 的类全限定名
-         * 那么 SpringBoot 就会自行将其注册到 Spring 容器中
+         * 自定义自动装配:
+         * 1. 新建 org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件
+         * 2. 该文件必须位于 classpath 路径下的 META-INF/spring 路径下
+         * 3. 文件名和所在路径必须严格要求
+         * 4. 在 org.springframework.boot.autoconfigure.AutoConfiguration.imports 文件中
+         *    添加需要进行自动装配的类的全限定类名，那么 SpringBoot 就会自行将其注册到 Spring 容器中
          */
         System.out.println("获取到的 Bean 为: " + context.getBean(Employee.class));
     }
-    
+
     @Test
     public void testLoadJsonSource() {
         Author author = context.getBean(Author.class);

@@ -2,7 +2,7 @@ package indi.mofan.source;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.env.PropertySourceLoader;
+import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @author mofan
  * @date 2022/10/12 20:39
  */
-public class JsonPropertySourceLoader implements PropertySourceLoader {
+public class JsonPropertySourceLoader extends YamlPropertySourceLoader {
 
     @Override
     public String[] getFileExtensions() {
