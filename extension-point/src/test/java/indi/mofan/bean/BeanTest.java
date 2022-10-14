@@ -3,6 +3,7 @@ package indi.mofan.bean;
 import indi.mofan.Application;
 import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.config.SimpleEnableAutoConfiguration;
+import indi.mofan.event.DeleteEvent;
 import indi.mofan.pojo.Author;
 import indi.mofan.pojo.Employee;
 import indi.mofan.pojo.Person;
@@ -123,7 +124,7 @@ public class BeanTest {
     @Test
     public void testLoadJsonSource() {
         /*
-         * 自定义配置文件解析器：
+         * 自定义配置文件解析器:
          * 1. 实现 PropertySourceLoader 接口，重写其中的两个方法，定义支持的类型与解析方式
          * 2. 以 PropertySourceLoader 的全限定类名为 key，实现类的全限定类名为 value 添加到 spring.factories 中，
          *    通过 Spring SPI 机制来实现自定义配置文件解析器
@@ -131,5 +132,18 @@ public class BeanTest {
          */
         Author author = context.getBean(Author.class);
         Assertions.assertEquals("mofan", author.getName());
+    }
+    
+    @Test
+    public void testEvent() {
+        /*
+         * 使用 Spring 的事件监听:
+         * 1. 新建事件类，继承 Spring 提供的事件基类 ApplicationEvent
+         * 2. 新建事件监听器，实现 Spring 提供的 ApplicationListener 接口，泛型为上一步新建的事件类
+         * 3. 将事件监听器交由 Spring 管理
+         * 4. 使用 ApplicationContext 发送事件
+         * 5. 或者实现 ApplicationEventPublisherAware 接口，重写方法以发送事件，实现类需要交由 Spring 管理
+         */
+        context.publishEvent(new DeleteEvent("applicationContext 发出的删除事件"));
     }
 }
