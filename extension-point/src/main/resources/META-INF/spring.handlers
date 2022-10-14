@@ -1,0 +1,2 @@
+# 指定 mofan 命名空间使用哪个 NameSpaceHandler 进行解析
+http\://mofan212.github.io/schema/mofan=indi.mofan.namespace.MofanNameSpaceHandler

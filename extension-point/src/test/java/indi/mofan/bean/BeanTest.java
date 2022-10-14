@@ -4,8 +4,10 @@ import indi.mofan.Application;
 import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.config.SimpleEnableAutoConfiguration;
 import indi.mofan.event.DeleteEvent;
+import indi.mofan.event.DeleteEventPublisher;
 import indi.mofan.pojo.Author;
 import indi.mofan.pojo.Employee;
+import indi.mofan.pojo.NameSpace;
 import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Student;
 import indi.mofan.pojo.Teacher;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
 import java.util.List;
@@ -145,5 +148,38 @@ public class BeanTest {
          * 5. 或者实现 ApplicationEventPublisherAware 接口，重写方法以发送事件，实现类需要交由 Spring 管理
          */
         context.publishEvent(new DeleteEvent("applicationContext 发出的删除事件"));
+    }
+
+    @Test
+    public void testEventPropagation() {
+        AnnotationConfigApplicationContext parent = new AnnotationConfigApplicationContext();
+        parent.register(DeleteEventPublisher.class);
+        parent.refresh();
+
+        AnnotationConfigApplicationContext child = new AnnotationConfigApplicationContext();
+        child.refresh();
+
+        child.setParent(parent);
+
+        // 通过子容器发布事件，能够在父容器监听到
+        child.publishEvent(new DeleteEvent("子容器发送的事件..."));
+    }
+
+    @Test
+    public void testCustomNameSpace() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        // 自定义命名空间成功注册 bean 到 Spring 中，可以通过 getBean() 获取到信息
+        NameSpace bean = context.getBean(NameSpace.class);
+        Assertions.assertNotNull(bean);
+
+        /*
+         * 自定义命名空间的方式:
+         * 1. 新建 xsd 文件（位置无要求），自定义其中的 xmlns 和 targetNamespace，结尾即为命名空间
+         * 2. 实现 NamespaceHandler 接口解析命名空间，一般不直接实现，而是继承 NamespaceHandlerSupport
+         * 3. 创建 spring.handlers 文件，指定命名空间的解析方式
+         * 4. 创建 spring.schemas 文件，指定 xsd 文件的路径
+         * 5. spring.handlers 和 spring.schemas 都置于 META-INF 目录下
+         * 6. 在 Spring 配置文件（如 applicationContext.xml）中使用自定义命名空间
+         */
     }
 }

@@ -22,4 +22,14 @@ SpringBoot 启动过程，会回调实现类的 `initialize` 方法，传入 `Co
 
 因此要想拓展这两个点，直接实现接口然后将实现类交由 Spring 管理即可。
 
+## 内置的事件
+
+1. `ContextRefreshedEvent`：在调用 `ConfigurableApplicationContext` 接口中的 `refresh()` 方法时触发
+
+2. `ContextStartedEvent`：在调用 `ConfigurableApplicationContext` 的 `start()` 方法时触发
+
+3. `ContextStoppedEvent`：在调用 `ConfigurableApplicationContext` 的 `stop()` 方法时触发
+
+4. `ContextClosedEvent`：当 `ApplicationContext` 被关闭时触发该事件，也就是调用 `close()` 方法触发
+
 

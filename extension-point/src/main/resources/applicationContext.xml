@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mofan="http://mofan212.github.io/schema/mofan"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://mofan212.github.io/schema/mofan
+       http://mofan212.github.io/schema/mofan.xsd
+       ">
+
+    <!--使用 mofan 标签，配置一个 User Bean-->
+    <mofan:bean class="indi.mofan.pojo.NameSpace"/>
+
+</beans>

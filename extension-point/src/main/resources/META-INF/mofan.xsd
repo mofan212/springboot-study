@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- xmlns 和 targetNamespace 需要自行定义，以 mofan 结尾，前面都一样的-->
+<xsd:schema xmlns="http://mofan212.github.io/schema/mofan"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://mofan212.github.io/schema/mofan">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+
+    <xsd:complexType name="Bean">
+        <!--    属性名为 class，类型是 string，要求必填    -->
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <!--
+        mofan 标签的子标签，类型是 Bean，找到 complexType = Bean类型，然后处理属性
+        最终标签的书写方式为：<mofan:bean class="xxx" />
+    -->
+    <xsd:element name="bean" type="Bean"/>
+</xsd:schema>
