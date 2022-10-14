@@ -1,1 +1,4 @@
 indi.mofan.config.SimpleEnableAutoConfiguration=indi.mofan.pojo.Employee
+
+org.springframework.boot.env.PropertySourceLoader=\
+  indi.mofan.source.JsonPropertySourceLoader

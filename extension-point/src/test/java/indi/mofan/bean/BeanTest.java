@@ -9,6 +9,7 @@ import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Student;
 import indi.mofan.pojo.Teacher;
 import indi.mofan.pojo.User;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +123,7 @@ public class BeanTest {
     }
 
     @Test
+    @Ignore
     public void testLoadJsonSource() {
         /*
          * 自定义配置文件解析器：
@@ -131,5 +133,11 @@ public class BeanTest {
          */
         Author author = context.getBean(Author.class);
         Assertions.assertEquals("mofan", author.getName());
+    }
+
+    @Test
+    public void test() {
+        Author author = context.getBean(Author.class);
+
     }
 }
