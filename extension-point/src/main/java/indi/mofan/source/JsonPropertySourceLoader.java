@@ -6,10 +6,9 @@ import org.springframework.boot.env.PropertySourceLoader;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
+import sun.misc.IOUtils;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.ReadableByteChannel;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,14 +29,10 @@ public class JsonPropertySourceLoader implements PropertySourceLoader {
 
     @Override
     public List<PropertySource<?>> load(String name, Resource resource) throws IOException {
-        ReadableByteChannel readableByteChannel = resource.readableChannel();
-        ByteBuffer byteBuffer = ByteBuffer.allocate((int) resource.contentLength());
-
-        // 将文件内容读到 ByteBuffer 中
-        readableByteChannel.read(byteBuffer);
+        byte[] bytes = IOUtils.readFully(resource.getInputStream(), (int) resource.contentLength(), true);
         // 将读出来的字节转换成字符串
-        String content = new String(byteBuffer.array());
-        // 将字符串转换成 JSONObject
+        String content = new String(bytes);
+        // 将字符串转换成 JsonNode
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(content);
 

@@ -9,7 +9,6 @@ import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Student;
 import indi.mofan.pojo.Teacher;
 import indi.mofan.pojo.User;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +99,6 @@ public class BeanTest {
          * Spring 的 SPI 机制:
          * 1. 配置文件必须在 classpath 路径下的 META-INF 文件夹内，文件名必须为 spring.factories
          * 2. spring.factories 文件内容为键值对，一个键可以对应多个值，使用逗号分割
-         *
          */
         List<String> values = SpringFactoriesLoader.loadFactoryNames(
                 SimpleEnableAutoConfiguration.class,
@@ -123,21 +121,15 @@ public class BeanTest {
     }
 
     @Test
-    @Ignore
     public void testLoadJsonSource() {
         /*
          * 自定义配置文件解析器：
-         * 1. 无法通过实现 PropertySourceLoader 接口，然后将实现类通过 Spring SPI 机制来实现自定义配置文件解析器
-         * 2. 因为 Spring SPI 机制中存在 cache，总是会取得缓存中的信息，而不是我们自定义的 PropertySourceLoader
-         * 3. 如果需要使用 JSON 作为配置文件，yaml 作为 JSON 的超集，直接在 yaml 文件中书写 JSON 即可，
+         * 1. 实现 PropertySourceLoader 接口，重写其中的两个方法，定义支持的类型与解析方式
+         * 2. 以 PropertySourceLoader 的全限定类名为 key，实现类的全限定类名为 value 添加到 spring.factories 中，
+         *    通过 Spring SPI 机制来实现自定义配置文件解析器
+         * 备注：yaml 作为 JSON 的超集，可以直接在 yaml 文件中书写 JSON 以支持 JSON 作为配置文件。见：application.yml
          */
         Author author = context.getBean(Author.class);
         Assertions.assertEquals("mofan", author.getName());
-    }
-
-    @Test
-    public void test() {
-        Author author = context.getBean(Author.class);
-
     }
 }
