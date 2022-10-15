@@ -6,6 +6,7 @@
     <modules>
         <module>assemble</module>
         <module>extension-point</module>
+        <module>async</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
