@@ -3,8 +3,12 @@ package indi.mofan.bean;
 import indi.mofan.Application;
 import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.config.SimpleEnableAutoConfiguration;
+import indi.mofan.enums.MutationType;
+import indi.mofan.event.ChineseHamburger;
 import indi.mofan.event.DeleteEvent;
 import indi.mofan.event.DeleteEventPublisher;
+import indi.mofan.event.MutationEvent;
+import indi.mofan.event.Pizza;
 import indi.mofan.pojo.Author;
 import indi.mofan.pojo.Employee;
 import indi.mofan.pojo.NameSpace;
@@ -17,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.support.SpringFactoriesLoader;
@@ -181,5 +186,21 @@ public class BeanTest {
          * 5. spring.handlers 和 spring.schemas 都置于 META-INF 目录下
          * 6. 在 Spring 配置文件（如 applicationContext.xml）中使用自定义命名空间
          */
+    }
+
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
+    @Test
+    public void testMutationEvent() {
+        ChineseHamburger hamburger = new ChineseHamburger();
+        hamburger.setPrice(18);
+        hamburger.setSize("M");
+        publisher.publishEvent(new MutationEvent<>(hamburger, MutationType.CREATED));
+
+        Pizza pizza = new Pizza();
+        pizza.setName("NewYorkPizza");
+        pizza.setPrice(25);
+        publisher.publishEvent(new MutationEvent<>(pizza, MutationType.UPDATED));
     }
 }
