@@ -1,4 +1,6 @@
 > 在此列举一些未在本 module 中使用代码示例的 SpringBoot 拓展点。
+> 
+> 参考文章: [三万字盘点Spring/Boot的那些常用扩展点](https://mp.weixin.qq.com/s/UNB4Nty-GuXqa448RdtfgQ)
 
 ## ApplicationContextInitializer
 

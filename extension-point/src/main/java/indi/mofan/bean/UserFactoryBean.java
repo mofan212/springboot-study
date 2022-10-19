@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author mofan
  * @date 2022/10/11 19:47
  */
-@Component
+@Component("userFactoryBean")
 public class UserFactoryBean implements FactoryBean<User> {
     @Override
     public User getObject() throws Exception {

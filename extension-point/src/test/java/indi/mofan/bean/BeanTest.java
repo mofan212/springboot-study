@@ -48,6 +48,13 @@ public class BeanTest {
          * 4. 将实现类交由 Spring 管理，即：使用 @Component 等类似注解
          */
         System.out.println("获取到的 Bean 为:" + context.getBean(User.class));
+
+        /*
+         * 使用 FactoryBean 注册的 Bean 的 name 是注册的实现类的 name
+         * 如果要获取 FactoryBean 的实现类对应的 Bean，需要在 name 前使用 & 符号
+         */
+        Assertions.assertTrue(context.getBean("userFactoryBean") instanceof User);
+        Assertions.assertTrue(context.getBean("&userFactoryBean") instanceof UserFactoryBean);
     }
 
     @Test
