@@ -21,6 +21,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.SimpleEvaluationContext;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
+import java.lang.reflect.Method;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -180,6 +181,7 @@ public class LanguageReferenceTest {
         int[] intInitArray = (int[]) parser.parseExpression("new int[]{1, 2, 3}").getValue();
         Assertions.assertArrayEquals(new int[]{1, 2, 3}, intInitArray);
 
+        // 多维数组不可初始化
         int[][] simpleMultiArray = (int[][]) parser.parseExpression("new int[4][5]").getValue();
         Assertions.assertArrayEquals(new int[4][5], simpleMultiArray);
     }
@@ -209,6 +211,9 @@ public class LanguageReferenceTest {
         Assertions.assertFalse(falseValue);
 
         Boolean value = parser.parseExpression("null < 0").getValue(Boolean.class);
+        Assertions.assertNotNull(value);
+        Assertions.assertTrue(value);
+        value = parser.parseExpression("null < -1").getValue(Boolean.class);
         Assertions.assertNotNull(value);
         Assertions.assertTrue(value);
 
@@ -406,9 +411,15 @@ public class LanguageReferenceTest {
     @SneakyThrows
     public void testFunctions() {
         SimpleEvaluationContext context = SimpleEvaluationContext.forReadOnlyDataBinding().build();
-        context.setVariable("reverseString", StringUtils.class.getMethod("reverseString", String.class));
-
+        Method method = StringUtils.class.getMethod("reverseString", String.class);
+        context.setVariable("reverseString", method);
         String olleh = parser.parseExpression("#reverseString('hello')").getValue(context, String.class);
+        Assertions.assertEquals("olleh", olleh);
+
+        // 明确调用的方法
+        StandardEvaluationContext standardEvaluationContext = new StandardEvaluationContext();
+        standardEvaluationContext.registerFunction("reverseString", method);
+        olleh = parser.parseExpression("#reverseString('hello')").getValue(standardEvaluationContext, String.class);
         Assertions.assertEquals("olleh", olleh);
     }
 
