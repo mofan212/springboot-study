@@ -11,6 +11,7 @@ import indi.mofan.event.MutationEvent;
 import indi.mofan.event.Pizza;
 import indi.mofan.pojo.Author;
 import indi.mofan.pojo.Employee;
+import indi.mofan.pojo.MyProperties;
 import indi.mofan.pojo.NameSpace;
 import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Student;
@@ -222,5 +223,13 @@ public class BeanTest {
          * 另一种监听事件的方式：自定义事件监听类，交由 Spring 管理；编写监听方法，参数为需要监听的事件类型，
          *                   并使用 @EventListener 注解标记。
          */
+    }
+    
+    @Test
+    public void testEnableConfigurationProperties() {
+        MyProperties properties = context.getBean(MyProperties.class);
+        Assertions.assertEquals("mofan", properties.getName());
+        Assertions.assertEquals(20, properties.getAge());
+        Assertions.assertEquals("man", properties.getGender());
     }
 }
