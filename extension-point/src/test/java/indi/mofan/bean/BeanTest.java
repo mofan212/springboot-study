@@ -6,7 +6,7 @@ import indi.mofan.config.SimpleEnableAutoConfiguration;
 import indi.mofan.enums.MutationType;
 import indi.mofan.event.ChineseHamburger;
 import indi.mofan.event.DeleteEvent;
-import indi.mofan.event.DeleteEventPublisher;
+import indi.mofan.event.DeleteListener;
 import indi.mofan.event.MutationEvent;
 import indi.mofan.event.Pizza;
 import indi.mofan.pojo.Author;
@@ -166,7 +166,7 @@ public class BeanTest {
     @Test
     public void testEventPropagation() {
         AnnotationConfigApplicationContext parent = new AnnotationConfigApplicationContext();
-        parent.register(DeleteEventPublisher.class);
+        parent.register(DeleteListener.class);
         parent.refresh();
 
         AnnotationConfigApplicationContext child = new AnnotationConfigApplicationContext();
