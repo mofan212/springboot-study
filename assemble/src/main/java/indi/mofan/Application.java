@@ -2,6 +2,7 @@ package indi.mofan;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * 为了能够被扫描到，启动类应当放在所有类的最外层包下。
  */
 @EnableAsync
+@EnableAspectJAutoProxy(exposeProxy = true)
 @SpringBootApplication
 public class Application {
 
