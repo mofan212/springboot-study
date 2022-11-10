@@ -97,4 +97,16 @@ public class InvalidTransactionTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals("mofan", result.getName());
     }
+
+    @Test
+    public void testDoAfterComplete() {
+        Student student = init();
+
+        try {
+            studentService.doAfterComplete(student);
+            Assertions.assertNotNull(studentService.selectById(student.getId()));
+        } catch (Exception e) {
+            Assertions.assertTrue(e instanceof ArithmeticException);
+        }
+    }
 }

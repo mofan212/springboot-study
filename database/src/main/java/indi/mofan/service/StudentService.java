@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import indi.mofan.dao.StudentDao;
 import indi.mofan.entity.Student;
+import indi.mofan.util.TransactionUtil;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,6 +112,20 @@ public class StudentService {
             int a = 1 / 0;
             return studentDao.updateById(student);
         });
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void doAfterComplete(Student student) {
+        studentDao.insert(student);
+        // 模拟随机失败
+        int random = (int) (Math.random() * 6);
+        if (random == 2) {
+            int a = 1 / 0;
+        }
+        // 事务成功调用
+        TransactionUtil.doAfterCompletion(new TransactionUtil.DoSomethingTransactionComplete(() -> {
+            System.out.println("事务成功后调用...");
+        }));
     }
 
     @Transactional(rollbackFor = Exception.class)
