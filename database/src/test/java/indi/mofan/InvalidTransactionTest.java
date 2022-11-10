@@ -85,4 +85,16 @@ public class InvalidTransactionTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals(20, result.getAge());
     }
+
+    @Test
+    public void testAvoidBigTransaction() {
+        Student student = init();
+
+        Assertions.assertThrows(ArithmeticException.class,
+                () -> studentService.avoidBigTransaction(student));
+
+        Student result = studentService.selectById(student.getId());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("mofan", result.getName());
+    }
 }

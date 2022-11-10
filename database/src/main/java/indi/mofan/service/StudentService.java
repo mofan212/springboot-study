@@ -7,9 +7,10 @@ import indi.mofan.entity.Student;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * @author mofan
@@ -19,8 +20,10 @@ import javax.annotation.Resource;
 public class StudentService {
     @Autowired
     private StudentDao studentDao;
-    @Resource
+    @Autowired
     private StudentService studentService;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     public Long saveAndUpdateButNoTransactional(Student student) {
         studentDao.insert(student);
@@ -41,6 +44,7 @@ public class StudentService {
     public Long saveAndUpdateRollBackSuccess_2(Student student) {
         studentDao.insert(student);
         student.setAge(student.getAge() + 1);
+        // SpringBoot 从 2.6 开始默认不允许出现 Bean 循环引用，需要在配置文件中显式配置
         studentService.updateButThrowException(student);
         return student.getId();
     }
@@ -76,6 +80,37 @@ public class StudentService {
         // 模拟抛出异常
         int a = 100 / 0;
         return i;
+    }
+
+    public Integer avoidBigTransaction(Student student) {
+        /*
+         * 如果事务处理的粒度过大，可能会造成的情况：
+         *   - 造成数据库死锁
+         *   - 在并发量大的情况下，数据库连接可能会被打满
+         *   - 数据回滚时间非常长
+         *   - 整个服务的性能大大降低
+         * 避免大事务，就是要将不需要被事务管理的操作抽取出来，比如查询，而只将
+         * 创建、更新、删除操作交由事务管理，抽取的方式除了可以额外编写方法进行
+         * 调用外，还可以使用编程式事务管理。
+         */
+
+        //  无需返回值，使用 TransactionCallbackWithoutResult
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                studentDao.insert(student);
+            }
+        });
+
+        assert studentDao.selectById(student.getId()) != null;
+
+        // 需要返回值，直接使用 Lambda 表达式
+        return transactionTemplate.execute(status -> {
+            student.setName("aaa");
+            // 模拟异常
+            int a = 1 / 0;
+            return studentDao.updateById(student);
+        });
     }
 
     @Transactional(rollbackFor = Exception.class)
