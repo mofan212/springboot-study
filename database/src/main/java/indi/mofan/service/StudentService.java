@@ -123,9 +123,7 @@ public class StudentService {
             int a = 1 / 0;
         }
         // 事务成功调用
-        TransactionUtil.doAfterCompletion(new TransactionUtil.DoSomethingTransactionComplete(() -> {
-            System.out.println("事务成功后调用...");
-        }));
+        TransactionUtil.doAfterCompletion(() -> System.out.println("事务成功后调用..."));
     }
 
     @Transactional(rollbackFor = Exception.class)

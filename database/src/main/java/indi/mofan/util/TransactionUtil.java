@@ -9,14 +9,14 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  */
 public class TransactionUtil {
 
-    public static void doAfterCompletion(DoSomethingTransactionComplete doSomethingTransactionComplete) {
+    public static void doAfterCompletion(Runnable runnable) {
         // 上下文中存在事务，注册同步器
         if (TransactionSynchronizationManager.isActualTransactionActive()) {
-            TransactionSynchronizationManager.registerSynchronization(doSomethingTransactionComplete);
+            TransactionSynchronizationManager.registerSynchronization(new DoSomethingTransactionComplete(runnable));
         }
     }
 
-    public static class DoSomethingTransactionComplete implements TransactionSynchronization {
+    private static class DoSomethingTransactionComplete implements TransactionSynchronization {
 
         private final Runnable runnable;
 
