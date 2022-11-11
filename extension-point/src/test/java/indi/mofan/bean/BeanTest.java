@@ -6,7 +6,7 @@ import indi.mofan.config.SimpleEnableAutoConfiguration;
 import indi.mofan.enums.MutationType;
 import indi.mofan.event.ChineseHamburger;
 import indi.mofan.event.DeleteEvent;
-import indi.mofan.event.DeleteListener;
+import indi.mofan.event.listener.DeleteListener;
 import indi.mofan.event.MutationEvent;
 import indi.mofan.event.Pizza;
 import indi.mofan.pojo.Author;

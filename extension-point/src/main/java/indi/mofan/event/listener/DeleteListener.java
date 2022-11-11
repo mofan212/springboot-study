@@ -1,5 +1,6 @@
-package indi.mofan.event;
+package indi.mofan.event.listener;
 
+import indi.mofan.event.DeleteEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
