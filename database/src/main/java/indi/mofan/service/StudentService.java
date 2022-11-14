@@ -136,4 +136,8 @@ public class StudentService {
         return studentDao.selectById(id);
     }
 
+    public Long selectByCount() {
+        return studentDao.selectCount(null);
+    }
+
 }
