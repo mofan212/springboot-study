@@ -9,6 +9,7 @@
         <module>async</module>
         <module>spel</module>
         <module>database</module>
+        <module>aop</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,6 +28,7 @@
         <commons.lang3.version>3.11</commons.lang3.version>
         <commons.collections4.version>4.4</commons.collections4.version>
         <mybatis.plus.version>3.5.2</mybatis.plus.version>
+        <aspectjweaver.version>1.9.6</aspectjweaver.version>
     </properties>
 
     <dependencies>
@@ -72,6 +74,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectjweaver.version}</version>
         </dependency>
 
         <dependency>
