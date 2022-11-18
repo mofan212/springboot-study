@@ -25,13 +25,15 @@ import java.util.concurrent.TimeUnit;
 public class OperateAspect {
 
     @Pointcut("@annotation(indi.mofan.log.RecordOperate)")
-    public void pointcut(){}
+    public void pointcut() {
+    }
 
     private final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
             1, 1, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>(100)
     );
 
     @Around("pointcut()")
+    @SuppressWarnings("unchecked")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object result = proceedingJoinPoint.proceed();
         THREAD_POOL_EXECUTOR.execute(() -> {
@@ -39,8 +41,8 @@ public class OperateAspect {
                 MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
                 RecordOperate annotation = signature.getMethod().getAnnotation(RecordOperate.class);
 
-                Class<? extends Convert> clazz = annotation.convert();
-                Convert convert = clazz.newInstance();
+                Class<? extends Convert<?>> clazz = annotation.convert();
+                Convert<Object> convert = (Convert<Object>) clazz.newInstance();
                 OperateLogDo operateLogDo = convert.convert(proceedingJoinPoint.getArgs()[0]);
 
                 operateLogDo.setDesc(annotation.desc());
