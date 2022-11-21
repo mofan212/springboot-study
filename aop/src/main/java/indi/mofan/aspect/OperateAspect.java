@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import indi.mofan.log.OperateLogDo;
 import indi.mofan.log.RecordOperate;
 import indi.mofan.log.convert.Convert;
+import indi.mofan.pojo.Order;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -59,7 +60,11 @@ public class OperateAspect {
                 } else {
                     Class<? extends Convert<?>> clazz = annotation.convert();
                     Convert<Object> convert = (Convert<Object>) clazz.newInstance();
-                    operateLogDo = convert.convert(proceedingJoinPoint.getArgs()[0]);
+                    Object firstArg = proceedingJoinPoint.getArgs()[0];
+                    if (!Order.class.isAssignableFrom(firstArg.getClass())) {
+                        throw new RuntimeException("Convert 默认只支持 indi.mofan.pojo.Order 类型");
+                    }
+                    operateLogDo = convert.convert(firstArg);
                 }
                 operateLogDo.setDesc(annotation.desc());
                 operateLogDo.setResult(result.toString());
