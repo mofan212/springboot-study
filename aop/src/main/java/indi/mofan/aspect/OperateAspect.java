@@ -5,13 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import indi.mofan.log.OperateLogDo;
 import indi.mofan.log.RecordOperate;
 import indi.mofan.log.convert.Convert;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -41,10 +47,20 @@ public class OperateAspect {
                 MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
                 RecordOperate annotation = signature.getMethod().getAnnotation(RecordOperate.class);
 
-                Class<? extends Convert<?>> clazz = annotation.convert();
-                Convert<Object> convert = (Convert<Object>) clazz.newInstance();
-                OperateLogDo operateLogDo = convert.convert(proceedingJoinPoint.getArgs()[0]);
-
+                OperateLogDo operateLogDo;
+                String orderId = annotation.orderId();
+                // 优先使用 SPEL
+                if (StringUtils.isNotEmpty(orderId)) {
+                    EvaluationContext context = getContext(proceedingJoinPoint.getArgs(), signature.getMethod());
+                    SpelExpressionParser parser = new SpelExpressionParser();
+                    Long id = parser.parseExpression(orderId).getValue(context, Long.class);
+                    operateLogDo = new OperateLogDo();
+                    operateLogDo.setOrderId(id);
+                } else {
+                    Class<? extends Convert<?>> clazz = annotation.convert();
+                    Convert<Object> convert = (Convert<Object>) clazz.newInstance();
+                    operateLogDo = convert.convert(proceedingJoinPoint.getArgs()[0]);
+                }
                 operateLogDo.setDesc(annotation.desc());
                 operateLogDo.setResult(result.toString());
 
@@ -55,5 +71,19 @@ public class OperateAspect {
             }
         });
         return result;
+    }
+
+    private EvaluationContext getContext(Object[] args, Method method) {
+        // 获取方法的参数名
+        String[] parameterNames = new LocalVariableTableParameterNameDiscoverer().getParameterNames(method);
+        if (parameterNames == null) {
+            throw new RuntimeException("参数列表为 null");
+        }
+
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        for (int i = 0; i < args.length; i++) {
+            context.setVariable(parameterNames[i], args[i]);
+        }
+        return context;
     }
 }

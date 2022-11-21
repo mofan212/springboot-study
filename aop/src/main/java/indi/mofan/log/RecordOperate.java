@@ -1,6 +1,7 @@
 package indi.mofan.log;
 
 import indi.mofan.log.convert.Convert;
+import indi.mofan.log.convert.OrderConvert;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -19,5 +20,12 @@ public @interface RecordOperate {
 
     String desc() default "";
 
-    Class<? extends Convert<?>> convert();
+    /**
+     * 支持 SPEL
+     *
+     * @return 订单 id 信息
+     */
+    String orderId() default "";
+
+    Class<? extends Convert<?>> convert() default OrderConvert.class;
 }

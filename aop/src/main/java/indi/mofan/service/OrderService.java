@@ -3,6 +3,7 @@ package indi.mofan.service;
 import indi.mofan.log.RecordOperate;
 import indi.mofan.log.convert.SaveOrderConvert;
 import indi.mofan.log.convert.UpdateOrderConvert;
+import indi.mofan.pojo.CreateOrUpdateOrder;
 import indi.mofan.pojo.SaveOrder;
 import indi.mofan.pojo.UpdateOrder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,12 @@ public class OrderService {
     @RecordOperate(desc = "更新订单", convert = UpdateOrderConvert.class)
     public Boolean updateOrder(UpdateOrder updateOrder) {
         System.out.println("update order, orderId: " + updateOrder.getOrderId());
+        return Boolean.TRUE;
+    }
+
+    @RecordOperate(desc = "创建或更新订单", orderId = "#order.idOfOrder")
+    public Boolean createOrUpdateOrder(CreateOrUpdateOrder order) {
+        System.out.println("create or update order, orderId: " + order.getIdOfOrder());
         return Boolean.TRUE;
     }
 }

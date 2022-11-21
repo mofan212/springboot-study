@@ -1,5 +1,6 @@
 package indi.mofan;
 
+import indi.mofan.pojo.CreateOrUpdateOrder;
 import indi.mofan.pojo.SaveOrder;
 import indi.mofan.pojo.UpdateOrder;
 import indi.mofan.service.OrderService;
@@ -32,5 +33,16 @@ public class OrderServiceTest {
 
         // 睡三秒，打印日志
         TimeUnit.SECONDS.sleep(3);
+    }
+
+    @Test
+    @SneakyThrows
+    public void test() {
+        CreateOrUpdateOrder order = new CreateOrUpdateOrder();
+        order.setIdOfOrder(212L);
+        orderService.createOrUpdateOrder(order);
+
+        // 睡一秒，异步打印日志
+        TimeUnit.SECONDS.sleep(1);
     }
 }
