@@ -1,6 +1,8 @@
 package indi.mofan;
 
+import indi.mofan.event.MyEvent;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.io.Resource;
 
 import java.lang.reflect.Field;
 import java.util.Locale;
@@ -47,4 +50,32 @@ public class BeanTest {
         String zhTW = context.getMessage("thanks", null, Locale.TRADITIONAL_CHINESE);
         Assertions.assertEquals("謝謝", zhTW);
     }
+
+    @Test
+    @SneakyThrows
+    public void testResourcePatternResolver() {
+        Resource[] resources = context.getResources("classpath:application.properties");
+        Assertions.assertTrue(resources.length > 0);
+
+        // 使用 classpath* 可以加载 jar 里类路径下的 resource
+        resources = context.getResources("classpath*:META-INF/spring.factories");
+        Assertions.assertTrue(resources.length > 0);
+    }
+
+    @Test
+    public void testEnvironmentCapable() {
+        // 读取系统环境变量
+        String javaHome = context.getEnvironment().getProperty("java_home");
+        Assertions.assertTrue(StringUtils.isNotEmpty(javaHome));
+
+        // 读取配置文件信息
+        String name = context.getEnvironment().getProperty("properties.name");
+        Assertions.assertEquals("mofan", name);
+    }
+    
+    @Test
+    public void testApplicationEventPublisher() {
+        context.publishEvent(new MyEvent("mofan"));
+    }
+
 }
