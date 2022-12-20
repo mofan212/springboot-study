@@ -10,7 +10,6 @@
         <module>spel</module>
         <module>database</module>
         <module>aop</module>
-        <module>advanced-spring</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
