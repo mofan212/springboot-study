@@ -75,8 +75,9 @@ public class EventTest {
          * 使用带泛型的事件类型:
          * 1. 定义一个带泛型的事件对象：类继承 ApplicationEvent，表示 Spring Event；但由于泛型擦除，
          *    将无法通过事件真正的内部对象类型来分发事件，为了解决这个问题，需要使类实现 ResolvableTypeProvider。
-         * 2. 如果未实现 ResolvableTypeProvider 接口，就算发送的泛型事件的内部对象类型与监听器指定的泛型事件的内部对象一样，
-         *    也不会监听成功。
+         * 2. 如果未实现 ResolvableTypeProvider 接口：
+         *    - 如果事件未实现 ApplicationEvent 接口，就算发送的泛型事件的内部对象类型与监听器指定的泛型事件的内部对象类型一样，也不会监听成功。
+         *    - 如果事件实现了 ApplicationEvent 接口，发送的事件会被所有监听器监听到，由此可能产生 ClassCastException
          *
          * 另一种发送事件的方式：使用注入的 ApplicationEventPublisher 发送事件。
          *
