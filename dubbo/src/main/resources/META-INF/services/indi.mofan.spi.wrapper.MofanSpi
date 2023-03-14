@@ -1,0 +1,2 @@
+original=indi.mofan.spi.wrapper.OriginalImpl
+wrapper=indi.mofan.spi.wrapper.WrapperImpl

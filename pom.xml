@@ -12,6 +12,7 @@
         <module>aop</module>
         <module>arthas-demo</module>
         <module>utils-study</module>
+        <module>dubbo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -29,6 +30,7 @@
         <commons.lang3.version>3.11</commons.lang3.version>
         <commons.collections4.version>4.4</commons.collections4.version>
         <mybatis.plus.version>3.5.2</mybatis.plus.version>
+        <dubbo.version>3.1.7</dubbo.version>
     </properties>
 
     <dependencies>

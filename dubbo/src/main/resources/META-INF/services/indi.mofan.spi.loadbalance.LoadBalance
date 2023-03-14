@@ -1,0 +1,5 @@
+random=indi.mofan.spi.loadbalance.RandomLoadBalance
+consistenthash=indi.mofan.spi.loadbalance.ConsistentHashLoadBalance
+roundrobin=indi.mofan.spi.loadbalance.RoundRobinLoadBalance
+leastactive=indi.mofan.spi.loadbalance.LeastActiveLoadBalance
+shortestresponse=indi.mofan.spi.loadbalance.ShortestResponseLoadBalance
