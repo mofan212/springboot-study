@@ -2,3 +2,6 @@ indi.mofan.config.SimpleEnableAutoConfiguration=indi.mofan.pojo.Employee
 
 org.springframework.boot.env.PropertySourceLoader=\
   indi.mofan.source.JsonPropertySourceLoader
+
+org.springframework.context.ApplicationContextInitializer = \
+  indi.mofan.summary.a01.A01ExtensionPoint.FirstApplicationContextInitializer
