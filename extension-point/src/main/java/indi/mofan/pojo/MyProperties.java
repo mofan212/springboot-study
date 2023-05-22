@@ -14,10 +14,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("properties")
 public class MyProperties {
 
-    private String name;
+    private String myName;
 
     private Integer age;
 
     @Value("${person.gender}")
     private String gender;
+
+    private InnerProperties innerProperties = new InnerProperties();
+
+    @Getter
+    @Setter
+    public static class InnerProperties {
+        private Integer integer;
+        private Boolean bool = Boolean.FALSE;
+    }
 }

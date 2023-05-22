@@ -21,7 +21,9 @@ mybatis-plus:
 
 #{"author.name":"mofan"}
 properties:
-  name: "mofan"
+  my-name: "mofan"
   age: 20
+  innerProperties:
+    integer: 212
 person:
   gender: "man"

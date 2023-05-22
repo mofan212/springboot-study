@@ -11,6 +11,7 @@ import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Student;
 import indi.mofan.pojo.Teacher;
 import indi.mofan.pojo.User;
+import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import java.util.List;
  * @date 2022/10/11 19:50
  */
 @SpringBootTest(classes = Application.class)
-public class BeanTest {
+public class BeanTest implements WithAssertions {
 
     @Autowired
     private ApplicationContext context;
@@ -114,7 +115,7 @@ public class BeanTest {
                 SimpleEnableAutoConfiguration.class,
                 SimpleEnableAutoConfiguration.class.getClassLoader()
         );
-        Assertions.assertTrue(values.stream().anyMatch(i -> Employee.class.getName().equals(i)));
+        assertThat(values).contains(Employee.class.getName());
     }
 
     @Test
@@ -140,15 +141,15 @@ public class BeanTest {
          * 备注：yaml 作为 JSON 的超集，可以直接在 yaml 文件中书写 JSON 以支持 JSON 作为配置文件。见：application.yml
          */
         Author author = context.getBean(Author.class);
-        Assertions.assertEquals("mofan", author.getName());
+        assertThat(author.getName()).isEqualTo("mofan");
     }
-    
+
     @Test
     public void testCustomNameSpace() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         // 自定义命名空间成功注册 bean 到 Spring 中，可以通过 getBean() 获取到信息
         NameSpace bean = context.getBean(NameSpace.class);
-        Assertions.assertNotNull(bean);
+        assertThat(bean).isNotNull();
 
         /*
          * 自定义命名空间的方式:
@@ -164,8 +165,9 @@ public class BeanTest {
     @Test
     public void testEnableConfigurationProperties() {
         MyProperties properties = context.getBean(MyProperties.class);
-        Assertions.assertEquals("mofan", properties.getName());
-        Assertions.assertEquals(20, properties.getAge());
-        Assertions.assertEquals("man", properties.getGender());
+        assertThat(properties)
+                .extracting(MyProperties::getMyName, MyProperties::getAge, MyProperties::getGender,
+                        i -> i.getInnerProperties().getInteger(), i -> i.getInnerProperties().getBool())
+                .containsExactly("mofan", 20, "man", 212, false);
     }
 }
