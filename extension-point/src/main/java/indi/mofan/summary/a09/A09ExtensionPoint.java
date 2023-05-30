@@ -21,7 +21,7 @@ public class A09ExtensionPoint {
         ConfigurableApplicationContext context = SpringApplication.run(A09ExtensionPoint.class, args);
         // context.close(); 不直接关闭容器，而是通过 System.exit() 关闭，此时会触发 shutdown hooks
         System.out.printf("[%s]: main 方法执行完毕，准备关闭容器\n", Thread.currentThread().getName());
-        System.exit(1);
+        System.exit(0);
     }
 
     @Component
