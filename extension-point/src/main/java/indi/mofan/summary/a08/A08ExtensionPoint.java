@@ -22,7 +22,7 @@ public class A08ExtensionPoint {
         context.close();
     }
 
-    private static final String EXAMPLE_BEAN_NAME = "example";
+    private static final String EXAMPLE_BEAN_NAME = "a08-example";
 
     @Component
     static class A08Dependence {

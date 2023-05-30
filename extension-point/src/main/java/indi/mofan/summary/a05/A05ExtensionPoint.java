@@ -22,7 +22,7 @@ import org.springframework.util.Assert;
 @SpringBootApplication
 public class A05ExtensionPoint {
 
-    private static final String EXAMPLE_BEAN_NAME = "example";
+    private static final String EXAMPLE_BEAN_NAME = "a05-example";
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(A05ExtensionPoint.class, args);

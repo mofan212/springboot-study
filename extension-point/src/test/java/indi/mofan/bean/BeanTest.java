@@ -14,6 +14,7 @@ import indi.mofan.pojo.User;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -169,5 +170,12 @@ public class BeanTest implements WithAssertions {
                 .extracting(MyProperties::getMyName, MyProperties::getAge, MyProperties::getGender,
                         i -> i.getInnerProperties().getInteger(), i -> i.getInnerProperties().getBool())
                 .containsExactly("mofan", 20, "man", 212, false);
+    }
+
+    @Test
+    public void testGetApplicationContextBean() {
+        // 无法通过 getBean 获取到 ApplicationContext
+        assertThatExceptionOfType(NoSuchBeanDefinitionException.class)
+                .isThrownBy(() -> context.getBean(ApplicationContext.class));
     }
 }
