@@ -1,6 +1,9 @@
 package indi.mofan.bean;
 
 import indi.mofan.Application;
+import indi.mofan.bean.lookup.AbstractBean;
+import indi.mofan.bean.lookup.PrototypeBean;
+import indi.mofan.bean.lookup.SingletonBean;
 import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.config.SimpleEnableAutoConfiguration;
 import indi.mofan.pojo.Author;
@@ -177,5 +180,22 @@ public class BeanTest implements WithAssertions {
         // 无法通过 getBean 获取到 ApplicationContext
         assertThatExceptionOfType(NoSuchBeanDefinitionException.class)
                 .isThrownBy(() -> context.getBean(ApplicationContext.class));
+    }
+
+    @Test
+    public void testLookup() {
+        AbstractBean abstractBean = context.getBean(AbstractBean.class);
+        assertThat(abstractBean).isNotNull()
+                .extracting(i -> i.getClass().getName())
+                .asString().contains("$$EnhancerBySpringCGLIB$$");
+
+        assertThat(context.getBean(PrototypeBean.class))
+                .isNotSameAs(context.getBean(PrototypeBean.class));
+
+        SingletonBean singletonBean = context.getBean(SingletonBean.class);
+        assertThat(singletonBean.getBean()).isSameAs(singletonBean.getBean());
+        assertThat(singletonBean.getPrototypeBean()).isNotSameAs(singletonBean.getPrototypeBean());
+        assertThat(singletonBean.returnNull()).isNotNull()
+                .isOfAnyClassIn(PrototypeBean.class);
     }
 }
