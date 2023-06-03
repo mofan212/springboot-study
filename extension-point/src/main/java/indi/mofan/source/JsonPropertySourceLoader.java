@@ -2,11 +2,11 @@ package indi.mofan.source;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.IOUtils;
 import org.springframework.boot.env.PropertySourceLoader;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
-import sun.misc.IOUtils;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -29,7 +29,7 @@ public class JsonPropertySourceLoader implements PropertySourceLoader {
 
     @Override
     public List<PropertySource<?>> load(String name, Resource resource) throws IOException {
-        byte[] bytes = IOUtils.readFully(resource.getInputStream(), (int) resource.contentLength(), true);
+        byte[] bytes = IOUtils.toByteArray(resource.getInputStream());
         // 将读出来的字节转换成字符串
         String content = new String(bytes);
         // 将字符串转换成 JsonNode

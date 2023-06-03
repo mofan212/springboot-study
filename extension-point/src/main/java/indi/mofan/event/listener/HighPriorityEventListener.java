@@ -1,7 +1,6 @@
 package indi.mofan.event.listener;
 
 import indi.mofan.event.OrderEvent;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.SmartApplicationListener;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HighPriorityEventListener implements SmartApplicationListener {
     @Override
-    public boolean supportsEventType(@NotNull Class<? extends ApplicationEvent> eventType) {
+    public boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
         return eventType == OrderEvent.class;
     }
 
