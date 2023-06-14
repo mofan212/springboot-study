@@ -13,6 +13,7 @@
         <module>arthas-demo</module>
         <module>utils-study</module>
         <module>dubbo</module>
+        <module>bean</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
