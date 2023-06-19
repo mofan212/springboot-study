@@ -193,8 +193,11 @@ public class BeanTest implements WithAssertions {
                 .isNotSameAs(context.getBean(PrototypeBean.class));
 
         SingletonBean singletonBean = context.getBean(SingletonBean.class);
+        // @Autowired 注入的是单例对象
         assertThat(singletonBean.getBean()).isSameAs(singletonBean.getBean());
+        // 使用 @Lookup 后每次获取的对象都不同
         assertThat(singletonBean.getPrototypeBean()).isNotSameAs(singletonBean.getPrototypeBean());
+        // 使用 @Lookup 会生成代理方法，尽管原方法返回的是 null，但代理方法返回的并不是
         assertThat(singletonBean.returnNull()).isNotNull()
                 .isOfAnyClassIn(PrototypeBean.class);
     }
