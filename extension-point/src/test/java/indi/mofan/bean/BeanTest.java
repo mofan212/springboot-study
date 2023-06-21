@@ -9,6 +9,7 @@ import indi.mofan.config.SimpleEnableAutoConfiguration;
 import indi.mofan.pojo.Author;
 import indi.mofan.pojo.Employee;
 import indi.mofan.pojo.MyProperties;
+import indi.mofan.pojo.MyYamlProperties;
 import indi.mofan.pojo.NameSpace;
 import indi.mofan.pojo.Person;
 import indi.mofan.pojo.Student;
@@ -200,5 +201,10 @@ public class BeanTest implements WithAssertions {
         // 使用 @Lookup 会生成代理方法，尽管原方法返回的是 null，但代理方法返回的并不是
         assertThat(singletonBean.returnNull()).isNotNull()
                 .isOfAnyClassIn(PrototypeBean.class);
+    }
+
+    @Test
+    public void testYamlPropertySourceFactory() {
+        assertThat(context.getBean(MyYamlProperties.class).getName()).isEqualTo("mofan");
     }
 }
