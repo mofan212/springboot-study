@@ -25,5 +25,10 @@ properties:
   age: 20
   innerProperties:
     integer: 212
+another-properties:
+  myName: "mofan212"
+  age: 21
+  innerProperties:
+    integer: 123
 person:
   gender: "man"

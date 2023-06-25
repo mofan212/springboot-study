@@ -8,6 +8,7 @@ import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.config.SimpleEnableAutoConfiguration;
 import indi.mofan.pojo.Author;
 import indi.mofan.pojo.Employee;
+import indi.mofan.pojo.MyAnotherProperties;
 import indi.mofan.pojo.MyProperties;
 import indi.mofan.pojo.MyYamlProperties;
 import indi.mofan.pojo.NameSpace;
@@ -177,6 +178,15 @@ public class BeanTest implements WithAssertions {
     }
 
     @Test
+    public void testConstructorBinding() {
+        MyAnotherProperties properties = context.getBean(MyAnotherProperties.class);
+        assertThat(properties)
+                .extracting(MyAnotherProperties::getMyName, MyAnotherProperties::getAge, MyAnotherProperties::getGender,
+                        i -> i.getInnerProperties().getInteger(), i -> i.getInnerProperties().getBool())
+                .containsExactly("mofan212", 21, "man", 123, false);
+    }
+
+    @Test
     public void testGetApplicationContextBean() {
         // 无法通过 getBean 获取到 ApplicationContext
         assertThatExceptionOfType(NoSuchBeanDefinitionException.class)
@@ -188,7 +198,7 @@ public class BeanTest implements WithAssertions {
         AbstractBean abstractBean = context.getBean(AbstractBean.class);
         assertThat(abstractBean).isNotNull()
                 .extracting(i -> i.getClass().getName())
-                .asString().contains("$$EnhancerBySpringCGLIB$$");
+                .asString().contains("CGLIB$$");
 
         assertThat(context.getBean(PrototypeBean.class))
                 .isNotSameAs(context.getBean(PrototypeBean.class));

@@ -22,11 +22,4 @@ public class MyProperties {
     private String gender;
 
     private InnerProperties innerProperties = new InnerProperties();
-
-    @Getter
-    @Setter
-    public static class InnerProperties {
-        private Integer integer;
-        private Boolean bool = Boolean.FALSE;
-    }
 }
