@@ -33,4 +33,6 @@ public class MyProperties {
 
     @DurationUnit(ChronoUnit.SECONDS)
     private Duration duration;
+
+    private Weight weight;
 }

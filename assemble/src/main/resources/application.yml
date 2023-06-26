@@ -28,6 +28,8 @@ properties:
   default-duration: 10
   duration-with-unit: 7d
   duration: 60
+  # 加引号才识别为字符串，否则识别成 Double，导致找不到对应的 Convertor
+  weight: "1000.1"
 another-properties:
   myName: "mofan212"
   age: 21

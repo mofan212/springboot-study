@@ -27,6 +27,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
 
@@ -183,6 +184,10 @@ public class BeanTest implements WithAssertions {
                 MyProperties::getDurationWithUnit,
                 MyProperties::getDuration
         ).containsExactly(Duration.ofMillis(10), Duration.ofDays(7), Duration.ofSeconds(60));
+
+        // custom convertor
+        assertThat(properties).extracting("weight.value", "weight.overWight")
+                .containsExactly(new BigDecimal("1000.1"), true);
     }
 
     @Test
