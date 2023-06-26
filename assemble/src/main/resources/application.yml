@@ -25,6 +25,9 @@ properties:
   age: 20
   innerProperties:
     integer: 212
+  default-duration: 10
+  duration-with-unit: 7d
+  duration: 60
 another-properties:
   myName: "mofan212"
   age: 21

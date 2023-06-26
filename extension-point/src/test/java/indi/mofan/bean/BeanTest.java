@@ -27,6 +27,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -175,6 +176,13 @@ public class BeanTest implements WithAssertions {
                 .extracting(MyProperties::getMyName, MyProperties::getAge, MyProperties::getGender,
                         i -> i.getInnerProperties().getInteger(), i -> i.getInnerProperties().getBool())
                 .containsExactly("mofan", 20, "man", 212, false);
+
+        // duration
+        assertThat(properties).extracting(
+                MyProperties::getDefaultDuration,
+                MyProperties::getDurationWithUnit,
+                MyProperties::getDuration
+        ).containsExactly(Duration.ofMillis(10), Duration.ofDays(7), Duration.ofSeconds(60));
     }
 
     @Test
