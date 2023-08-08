@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    # 项目中已拓展 Mybatis-plus 的批量更新，需要在连接信息中添加 allowMultiQueries=true 表示开启批量更新
+    url: jdbc:mysql:///boot_study?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  main:
+    # SpringBoot 从 2.6 开始默认不允许出现 Bean 循环引用，因此需要显式配置
+    allow-circular-references: true
+
+name: mofan

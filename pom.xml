@@ -14,6 +14,7 @@
         <module>utils-study</module>
         <module>dubbo</module>
         <module>bean</module>
+        <module>core-functions</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
