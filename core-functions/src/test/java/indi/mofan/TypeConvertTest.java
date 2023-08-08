@@ -62,6 +62,9 @@ public class TypeConvertTest implements WithAssertions {
         // 为了便于使用，Spring 提供了 GenericConversionService，默认添加了很多转换器
         DefaultConversionService service = new DefaultConversionService();
         assertThat(service.convert(123, String.class)).isEqualTo("123");
+        // 也可以直接使用静态方法获取
+        assertThat(DefaultConversionService.getSharedInstance().convert(123, String.class))
+                .isEqualTo("123");
 
         // SpringBoot 环境下，还可以使用 ApplicationConversionService
         ApplicationConversionService conversionService = new ApplicationConversionService();
