@@ -12,7 +12,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -80,7 +80,7 @@ public class OperateAspect {
 
     private EvaluationContext getContext(Object[] args, Method method) {
         // 获取方法的参数名
-        String[] parameterNames = new LocalVariableTableParameterNameDiscoverer().getParameterNames(method);
+        String[] parameterNames = new StandardReflectionParameterNameDiscoverer().getParameterNames(method);
         if (parameterNames == null) {
             throw new RuntimeException("参数列表为 null");
         }
