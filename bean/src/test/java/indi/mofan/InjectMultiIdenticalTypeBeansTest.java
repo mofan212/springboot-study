@@ -1,3 +1,5 @@
+package indi.mofan;
+
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
