@@ -47,7 +47,7 @@ public class FullLiteModeTest implements WithAssertions {
         }
     }
 
-//    @Configuration(proxyBeanMethods = false)
+    //    @Configuration(proxyBeanMethods = false)
     @Component
     static class LiteConfig {
 
@@ -68,6 +68,10 @@ public class FullLiteModeTest implements WithAssertions {
         public Book liteBook() {
             return new Book();
         }
+    }
+
+    @Configuration
+    static class EmptyConfig {
     }
 
     private static final String LABEL_VALUE;
@@ -110,5 +114,13 @@ public class FullLiteModeTest implements WithAssertions {
         Book liteBook = (Book) context.getBean("liteBook");
         assertThat(person.getBook()).isNotSameAs(liteBook);
         assertThat(person.getAnotherBook()).isSameAs(liteBook);
+    }
+
+    @Test
+    public void testEmptyConfig() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(EmptyConfig.class);
+        EmptyConfig config = context.getBean(EmptyConfig.class);
+        // 被 @Configuration 注解标记就会生成代理对象
+        assertThat(config.getClass().getName()).contains(LABEL_VALUE);
     }
 }
