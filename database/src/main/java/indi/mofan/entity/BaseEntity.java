@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class BaseEntity implements Serializable {
+    @Serial
     private static final long serialVersionUID = 8219268788524935950L;
 
     @TableId(type = IdType.ASSIGN_ID)

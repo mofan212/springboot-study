@@ -2,7 +2,6 @@ package indi.mofan.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import indi.mofan.enums.Gender;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,14 +9,14 @@ import java.io.Serial;
 
 /**
  * @author mofan
- * @date 2022/11/9 22:09
+ * @date 2023/9/30 11:03
  */
-@Setter
 @Getter
-@TableName("tb_student")
-public class Student extends BaseEntity {
+@Setter
+@TableName("tb_test_null")
+public class TestNull extends BaseEntity {
     @Serial
-    private static final long serialVersionUID = 4072478525857967932L;
+    private static final long serialVersionUID = -1332169884425770306L;
 
     @TableField("name")
     private String name;
@@ -25,6 +24,6 @@ public class Student extends BaseEntity {
     @TableField("age")
     private Integer age;
 
-    @TableField("gender")
-    private Gender gender;
+    @TableField("empty_field")
+    private String emptyField;
 }
