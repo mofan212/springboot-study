@@ -56,6 +56,7 @@ public class A03ExtensionPoint {
             RootBeanDefinition beanDefinition = (RootBeanDefinition) beanFactory.getBeanDefinition("cat");
             MutablePropertyValues propertyValues = beanDefinition.getPropertyValues();
             System.out.println("原始年龄是: " + propertyValues.get("age"));
+            // 添加名为 age 的 property，但已经存在同名的 property，新值覆盖旧值
             propertyValues.add("age", 2);
         }
     }
