@@ -45,7 +45,7 @@ public class A04ExtensionPoint {
 
     @Configuration
     static class A04Configuration {
-        @Bean(initMethod = "init")
+        @Bean(name = "fish", initMethod = "init")
         public Fish fish() {
             return new Fish();
         }
