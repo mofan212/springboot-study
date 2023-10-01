@@ -27,6 +27,7 @@ public class A05ExtensionPoint {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(A05ExtensionPoint.class, args);
         Assert.isTrue(context.getBean(Example.class).getStr().equals("str"), "");
+        Assert.isTrue(context.getBean(Example.class).getDependence().equals(context.getBean(Dependence.class)), "");
         context.close();
     }
 
@@ -87,7 +88,7 @@ public class A05ExtensionPoint {
             if (EXAMPLE_BEAN_NAME.equals(beanName)) {
                 System.out.println("4. 执行了 postProcessAfterInstantiation() 方法");
             }
-            // 是否需要依赖注入，如果返回 false，还会阻塞 InstantiationAwareBeanPostProcessor 的后续操作
+            // 是否需要依赖注入，如果返回 false，则不再执行 postProcessProperties() 方法；
             return true;
         }
 
