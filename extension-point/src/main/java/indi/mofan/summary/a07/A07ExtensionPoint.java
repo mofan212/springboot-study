@@ -1,17 +1,17 @@
 package indi.mofan.summary.a07;
 
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
 /**
  * @author mofan
- * @date 2023/5/29 16:18
+ * @date 2023/5/29 14:05
  */
 @SpringBootApplication
 public class A07ExtensionPoint {
@@ -20,35 +20,39 @@ public class A07ExtensionPoint {
         context.close();
     }
 
+
+    /**
+     * <p>
+     * 类似的接口还有：
+     * <ul>
+     *     <li>EnvironmentAware</li>
+     *     <li>EmbeddedValueResolverAware</li>
+     *     <li>ResourceLoaderAware</li>
+     *     <li>ApplicationEventPublisherAware</li>
+     *     <li>MessageSourceAware</li>
+     *     <li>ApplicationStartupAware</li>
+     * </ul>
+     * </p>
+     */
     @Component
-    static class A07Dependence {
-        public A07Dependence() {
-            System.out.println("1. 执行了 A07Dependence 的无参构造");
+    static class MyApplicationContextAware implements ApplicationContextAware {
+        private ApplicationContext applicationContext;
+
+        @Override
+        public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+            this.applicationContext = applicationContext;
+            System.out.println("2. Spring 上下文 ApplicationContext 被注入");
         }
     }
 
     @Component
-    static class A07Example implements InitializingBean {
-        private A07Dependence dependence;
-
-        public A07Example(A07Dependence dependence) {
-            System.out.println("2. 执行了 A07Example 的无参构造");
-        }
+    static class MyApplicationContext {
+        private ApplicationContext applicationContext;
 
         @Autowired
-        public void setDependence(A07Dependence dependence) {
-            this.dependence = dependence;
-            System.out.println("3. A07Example 注入 dependence");
-        }
-
-        @PostConstruct
-        public void init() {
-            System.out.println("4. 执行了 @PostConstruct 标记的方法");
-        }
-
-        @Override
-        public void afterPropertiesSet() throws Exception {
-            System.out.println("5. 执行了 afterPropertiesSet 标记的方法");
+        public void setApplicationContext(ApplicationContext applicationContext) {
+            this.applicationContext = applicationContext;
+            System.out.println("1. 使用 @Autowired 注入 ApplicationContext");
         }
     }
 }
