@@ -7,6 +7,8 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +30,6 @@ public class A09ExtensionPoint {
     static class A08Dependence {
     }
 
-    @Component(EXAMPLE_BEAN_NAME)
     static class A08Example implements InitializingBean {
         private A08Dependence dependence;
 
@@ -47,6 +48,18 @@ public class A09ExtensionPoint {
         public void init() {
             System.out.println("3. 执行了 init 方法");
         }
+
+        public void initMethod() {
+            System.out.println("5. 执行了 init-method");
+        }
+    }
+
+    @Configuration
+    static class MyConfig {
+        @Bean(value = EXAMPLE_BEAN_NAME, initMethod = "initMethod")
+        public A08Example a08Example() {
+            return new A08Example();
+        }
     }
 
     @Component
@@ -62,7 +75,7 @@ public class A09ExtensionPoint {
         @Override
         public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
             if (EXAMPLE_BEAN_NAME.equals(beanName)) {
-                System.out.println("5. 执行了 postProcessAfterInitialization 方法");
+                System.out.println("6. 执行了 postProcessAfterInitialization 方法");
             }
             return bean;
         }
