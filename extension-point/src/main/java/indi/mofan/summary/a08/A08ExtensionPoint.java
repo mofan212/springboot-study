@@ -1,7 +1,8 @@
 package indi.mofan.summary.a08;
 
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,6 +16,9 @@ import javax.annotation.PostConstruct;
  */
 @SpringBootApplication
 public class A08ExtensionPoint {
+
+    private static final String BEAN_NAME = "a07Example";
+
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(A08ExtensionPoint.class, args);
         context.close();
@@ -27,8 +31,8 @@ public class A08ExtensionPoint {
         }
     }
 
-    @Component
-    static class A07Example implements InitializingBean {
+    @Component(BEAN_NAME)
+    static class A07Example {
         private A07Dependence dependence;
 
         public A07Example(A07Dependence dependence) {
@@ -43,12 +47,27 @@ public class A08ExtensionPoint {
 
         @PostConstruct
         public void init() {
-            System.out.println("4. 执行了 @PostConstruct 标记的方法");
+            System.out.println("5. 执行了 @PostConstruct 标记的方法");
+        }
+    }
+
+    @Component
+    static class MyBeanPostProcessor implements BeanPostProcessor {
+        @Override
+        public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+            if (BEAN_NAME.equals(beanName)) {
+                System.out.println("4. 执行了 postProcessBeforeInitialization 方法");
+            }
+            return bean;
         }
 
         @Override
-        public void afterPropertiesSet() throws Exception {
-            System.out.println("5. 执行了 afterPropertiesSet 标记的方法");
+        public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+            if (BEAN_NAME.equals(beanName)) {
+                System.out.println("6. 执行了 postProcessBeforeInitialization 方法");
+            }
+            return bean;
         }
     }
+
 }
