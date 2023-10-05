@@ -25,9 +25,8 @@ public class A13ExtensionPoint {
         TimeUnit.SECONDS.sleep(1);
         context.close();
         /*
-         * 可以不直接关闭容器，而是通过 System.exit() 关闭，此时会触发 shutdown hooks
-         * System.exit(0);
-         * context.registerShutdownHook(); 可以 registerShutdownHook() 后手动关闭容器，即结束程序运行
+         * 可以不直接关闭容器，而是通过 `System.exit(0)` 关闭，此时会触发 shutdown hooks；
+         * 或者是在 IDEA 中，手动停止程序，也会触发 shutdown hooks
          */
     }
 
