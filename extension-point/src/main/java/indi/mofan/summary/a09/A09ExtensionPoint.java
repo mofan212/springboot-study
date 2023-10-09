@@ -1,5 +1,6 @@
 package indi.mofan.summary.a09;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 
 /**
  * @author mofan
@@ -40,7 +40,7 @@ public class A09ExtensionPoint {
         }
 
         @Override
-        public void afterPropertiesSet() throws Exception {
+        public void afterPropertiesSet() {
             System.out.println("4. 执行了 afterPropertiesSet 方法");
         }
 
