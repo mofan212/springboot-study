@@ -2,6 +2,7 @@ package indi.mofan.summary.a15;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Component;
 @SpringBootApplication
 public class A15ExtensionPoint {
     public static void main(String[] args) {
-        SpringApplication.run(A15ExtensionPoint.class);
-        System.exit(0);
+        ConfigurableApplicationContext context =
+                SpringApplication.run(A15ExtensionPoint.class);
+        // System.exit(0);
+        context.close();
     }
 
     @Component
