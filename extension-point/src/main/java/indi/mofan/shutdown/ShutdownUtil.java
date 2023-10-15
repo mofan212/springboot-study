@@ -15,7 +15,7 @@ public class ShutdownUtil {
             System.out.printf("[%s]: 即将执行 context.close() 关闭容器\n", Thread.currentThread().getName());
             context.close();
         } else {
-            System.out.printf("[%s]: 即将执行 System.exit(0) 关闭容器\n", Thread.currentThread().getName());
+            System.out.printf("[%s]: 即将执行 System.exit(0) 退出程序\n", Thread.currentThread().getName());
             System.exit(0);
         }
     }
