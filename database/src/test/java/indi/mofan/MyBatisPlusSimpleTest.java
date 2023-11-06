@@ -10,6 +10,7 @@ import indi.mofan.entity.TestNull;
 import indi.mofan.enums.Gender;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,6 @@ public class MyBatisPlusSimpleTest implements WithAssertions {
                 .findFirst();
 
         var wrapper = Wrappers.lambdaUpdate(TestNull.class)
-                .eq(TestNull::getName, UNIQUE_NAME)
                 .set(TestNull::getEmptyField, null)
                 .set(TestNull::getAge, null);
 
@@ -83,8 +83,11 @@ public class MyBatisPlusSimpleTest implements WithAssertions {
                 .filter(i -> UNIQUE_NAME.equals(i.getName()))
                 .findFirst();
 
-        optional.ifPresent(entity -> assertThat(entity)
-                .extracting(TestNull::getEmptyField, TestNull::getAge).containsOnlyNulls());
+        optional.ifPresent(
+                entity -> assertThat(entity)
+                        .extracting(TestNull::getEmptyField, TestNull::getAge)
+                        .containsOnlyNulls()
+        );
     }
 
     @Test
@@ -93,7 +96,7 @@ public class MyBatisPlusSimpleTest implements WithAssertions {
                 .filter(i -> UNIQUE_NAME.equals(i.getName()))
                 .findFirst();
         if (optional.isEmpty()) {
-            return;
+            Assertions.fail();
         }
 
         TestNull entity = optional.get();
@@ -104,7 +107,10 @@ public class MyBatisPlusSimpleTest implements WithAssertions {
         optional = getMofanTestNull().stream()
                 .filter(i -> UNIQUE_NAME.equals(i.getName()))
                 .findFirst();
-        optional.ifPresent(i -> assertThat(i)
-                .extracting(TestNull::getEmptyField, TestNull::getAge).containsOnlyNulls());
+        optional.ifPresent(
+                i -> assertThat(i)
+                        .extracting(TestNull::getEmptyField, TestNull::getAge)
+                        .containsOnlyNulls()
+        );
     }
 }
