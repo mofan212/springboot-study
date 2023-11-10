@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2023/10/7 16:45
  */
 @Configuration
-public class MyConfig {
+public class MyShutDownConfig {
     @Bean
     public MyDisposableBean myDisposableBean() {
         return new MyDisposableBean();

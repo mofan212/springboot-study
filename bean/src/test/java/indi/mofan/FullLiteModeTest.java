@@ -7,14 +7,11 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cglib.core.SpringNamingPolicy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Field;
 
 /**
  * @author mofan
@@ -56,6 +53,7 @@ public class FullLiteModeTest implements WithAssertions {
         private Book book;
 
         @Bean
+        @SuppressWarnings("SpringConfigurationProxyMethods")
         public Person litePerson() {
             Person person = new Person();
             person.setBook(liteBook());
@@ -74,17 +72,7 @@ public class FullLiteModeTest implements WithAssertions {
     static class EmptyConfig {
     }
 
-    private static final String LABEL_VALUE;
-
-    static {
-        try {
-            Field label = SpringNamingPolicy.class.getDeclaredField("LABEL");
-            label.setAccessible(true);
-            LABEL_VALUE = (String) label.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private static final String LABEL_VALUE = "$$SpringCGLIB$$";
 
     @Test
     @SneakyThrows

@@ -40,7 +40,7 @@ public class A13ExtensionPoint {
         }
     }
 
-    static class MyDisposableBean implements DisposableBean {
+    static class A13DisposableBean implements DisposableBean {
 
         @Override
         public void destroy() {
@@ -60,8 +60,8 @@ public class A13ExtensionPoint {
     @Configuration
     static class MyConfig {
         @Bean(destroyMethod = "destroyMethod")
-        public MyDisposableBean myDisposableBean() {
-            return new MyDisposableBean();
+        public A13DisposableBean a13DisposableBean() {
+            return new A13DisposableBean();
         }
     }
 

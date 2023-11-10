@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class SpringShutdownHook {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(MyConfig.class);
+                new AnnotationConfigApplicationContext(MyShutDownConfig.class);
         // 非 SpringBoot 环境下，需要手动注册
         context.registerShutdownHook();
         ShutdownUtil.shutdown(context);

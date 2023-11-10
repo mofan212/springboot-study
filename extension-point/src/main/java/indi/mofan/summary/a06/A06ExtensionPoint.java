@@ -20,7 +20,7 @@ import java.lang.reflect.Constructor;
 @SpringBootApplication
 public class A06ExtensionPoint {
 
-    private static final String STUDENT_BEAN_NAME = "student";
+    private static final String STUDENT_BEAN_NAME = "a06-student";
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(A06ExtensionPoint.class);

@@ -29,11 +29,11 @@ public class ResolvableTypeTest implements WithAssertions {
         Class<?> firstGenericClazz = firstGenericType.resolve();
         assertThat(firstGenericClazz).isEqualTo(String.class);
 
-        // 再获取第二个泛型信息 List<String>
+        // 再获取第二个泛型信息 List<Integer>
         ResolvableType secondGenericType = hashMapType.getGeneric(1);
         ResolvableType secondFirstGenericType = secondGenericType.getGeneric(0);
         Class<?> secondFirstGenericClazz = secondFirstGenericType.resolve();
-        assertThat(secondFirstGenericClazz).isEqualTo(String.class);
+        assertThat(secondFirstGenericClazz).isEqualTo(Integer.class);
 
         /*
          * 除此 forClass() 之外，创建 ResolvableType 的方式有很多，比如：

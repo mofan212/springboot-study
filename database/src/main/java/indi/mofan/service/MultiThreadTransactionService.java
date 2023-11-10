@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -32,6 +33,12 @@ public class MultiThreadTransactionService {
     public void transactionAsyncFail() {
         // 这条数据不会回滚
         new Thread(() -> addStudent(1)).start();
+        try {
+            // 睡一会，避免另一个线程还没执行
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException ignored) {
+            // do nothing
+        }
         // 这条数据会回滚
         addStudent(3);
         throw new RuntimeException("异常信息");

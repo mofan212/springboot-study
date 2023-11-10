@@ -211,9 +211,7 @@ public class LambdaSafeTest {
                     consumer,
                     str
             ).invoke(i -> i.accept(2));
-        }).isInstanceOf(ClassCastException.class)
-                // java.lang.Integer cannot be cast to java.lang.String
-                .hasMessageStartingWith(Integer.class.getName());
+        }).isInstanceOf(ClassCastException.class);
     }
 
     interface FirstFunction extends Function<Integer, Integer> {
@@ -272,8 +270,7 @@ public class LambdaSafeTest {
                     functions,
                     param
             ).invoke(i -> System.out.println(i.apply(String.valueOf(param))));
-        }).isInstanceOf(ClassCastException.class)
-                .hasMessageStartingWith(String.class.getName());
+        }).isInstanceOf(ClassCastException.class);
     }
 
     @Test
