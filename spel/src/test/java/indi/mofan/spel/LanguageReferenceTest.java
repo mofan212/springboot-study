@@ -371,7 +371,7 @@ public class LanguageReferenceTest {
         Society society = new Society();
         // 属性名不区分大小写，因此 Members.add() 或 members.add() 都可以
         parser.parseExpression("members.add(new indi.mofan.spel.pojo.Inventor('Albert Einstein', 'German'))").getValue(society);
-        Assertions.assertTrue(society.getMembers().size() > 0);
+        Assertions.assertFalse(society.getMembers().isEmpty());
         Inventor member = society.getMembers().get(0);
         Assertions.assertNotNull(member);
         Assertions.assertEquals("German", inventor.getNationality());

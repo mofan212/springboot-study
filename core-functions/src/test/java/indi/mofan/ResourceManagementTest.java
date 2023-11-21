@@ -11,6 +11,7 @@ import org.springframework.core.io.UrlResource;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -26,7 +27,7 @@ public class ResourceManagementTest implements WithAssertions {
     @SneakyThrows
     public void testGetBaiduHomePageInfo() {
         // 构建 URL
-        URL url = new URL(BAIDU_WEB_SITE);
+        URL url = new URI(BAIDU_WEB_SITE).toURL();
         // 打开资源连接
         URLConnection urlConnection = url.openConnection();
         // 获取资源输入流

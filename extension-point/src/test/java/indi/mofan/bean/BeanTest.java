@@ -7,6 +7,7 @@ import indi.mofan.bean.lookup.SingletonBean;
 import indi.mofan.config.LifeCycleConfig;
 import indi.mofan.config.SimpleEnableAutoConfiguration;
 import indi.mofan.pojo.Author;
+import indi.mofan.pojo.BaseEmployee;
 import indi.mofan.pojo.Employee;
 import indi.mofan.pojo.MyAnotherProperties;
 import indi.mofan.pojo.MyProperties;
@@ -118,12 +119,16 @@ public class BeanTest implements WithAssertions {
          * Spring 的 SPI 机制:
          * 1. 配置文件必须在 classpath 路径下的 META-INF 文件夹内，文件名必须为 spring.factories
          * 2. spring.factories 文件内容为键值对，一个键可以对应多个值，使用逗号分割
+         * 3. 键必须是值的父类
          */
-        List<String> values = SpringFactoriesLoader.loadFactoryNames(
-                SimpleEnableAutoConfiguration.class,
-                SimpleEnableAutoConfiguration.class.getClassLoader()
+        SpringFactoriesLoader loader = SpringFactoriesLoader.forDefaultResourceLocation();
+        List<BaseEmployee> list = loader.load(
+                BaseEmployee.class
         );
-        assertThat(values).contains(Employee.class.getName());
+        assertThat(list).hasSize(1).singleElement().isInstanceOf(Employee.class);
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> loader.load(SimpleEnableAutoConfiguration.class));
     }
 
     @Test

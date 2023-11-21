@@ -18,6 +18,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -59,7 +60,7 @@ public class OperateAspect {
                     operateLogDo.setOrderId(id);
                 } else {
                     Class<? extends Convert<?>> clazz = annotation.convert();
-                    Convert<Object> convert = (Convert<Object>) clazz.newInstance();
+                    Convert<Object> convert = (Convert<Object>) clazz.getDeclaredConstructor().newInstance();
                     Object firstArg = proceedingJoinPoint.getArgs()[0];
                     if (!Order.class.isAssignableFrom(firstArg.getClass())) {
                         throw new RuntimeException("Convert 默认只支持 indi.mofan.pojo.Order 类型");
@@ -71,7 +72,8 @@ public class OperateAspect {
 
                 ObjectMapper mapper = new ObjectMapper();
                 System.out.println("operate log " + mapper.writeValueAsString(operateLogDo));
-            } catch (InstantiationException | IllegalAccessException | JsonProcessingException e) {
+            } catch (InstantiationException | IllegalAccessException | JsonProcessingException |
+                     InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
         });

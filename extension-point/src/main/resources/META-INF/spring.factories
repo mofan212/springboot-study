@@ -1,3 +1,5 @@
+indi.mofan.pojo.BaseEmployee=indi.mofan.pojo.Employee
+
 indi.mofan.config.SimpleEnableAutoConfiguration=indi.mofan.pojo.Employee
 
 org.springframework.boot.env.PropertySourceLoader=\
