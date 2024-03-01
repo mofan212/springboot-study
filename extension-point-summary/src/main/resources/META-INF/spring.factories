@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationContextInitializer = \
+  indi.mofan.summary.a01.A01ExtensionPoint.FirstApplicationContextInitializer

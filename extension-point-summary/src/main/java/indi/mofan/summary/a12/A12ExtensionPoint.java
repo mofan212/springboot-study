@@ -22,8 +22,8 @@ public class A12ExtensionPoint {
         // 通过 bean 的 name 获取
         Object bean = context.getBean(OWL_BEAN_NAME);
         Assert.isInstanceOf(Owl.class, bean);
-        bean = context.getBean(BeanFactory.FACTORY_BEAN_PREFIX + OWL_BEAN_NAME);
-        Assert.isInstanceOf(OwlFactoryBean.class, bean);
+        Object factoryBean = context.getBean(BeanFactory.FACTORY_BEAN_PREFIX + OWL_BEAN_NAME);
+        Assert.isInstanceOf(OwlFactoryBean.class, factoryBean);
         Object sameBean = context.getBean(OWL_BEAN_NAME);
         Assert.isTrue(bean == sameBean, "");
         context.close();

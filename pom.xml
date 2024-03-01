@@ -17,6 +17,7 @@
         <module>core-functions</module>
         <module>web-container</module>
         <module>openfeign</module>
+        <module>extension-point-summary</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
