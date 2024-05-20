@@ -33,7 +33,7 @@ public class OrderStateMachineConfig extends StateMachineConfigurerAdapter<Order
     }
 
     /**
-     * 配置状态转换与事件的关系
+     * 配置事件与状态转换的关系
      */
     @Override
     public void configure(StateMachineTransitionConfigurer<OrderStatus, OrderStatusChangeEvent> transitions) throws Exception {

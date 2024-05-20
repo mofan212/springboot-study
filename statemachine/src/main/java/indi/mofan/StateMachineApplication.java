@@ -13,7 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @Slf4j
 @SpringBootApplication
 public class StateMachineApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Thread.currentThread().setName("主线程");
         ConfigurableApplicationContext context = SpringApplication.run(StateMachineApplication.class, args);
         OrderService orderService = (OrderService) context.getBean("orderService");
@@ -22,18 +22,17 @@ public class StateMachineApplication {
         orderService.create();
         orderService.pay(1);
 
-        new Thread("客户线程") {
-            @Override
-            public void run() {
-                orderService.deliver(1);
-                orderService.receive(1);
-            }
-        }.start();
+        Runnable runnable = () -> {
+            orderService.deliver(1);
+            orderService.receive(1);
+        };
+        new Thread(runnable, "客户线程").start();
 
         orderService.pay(2);
         orderService.deliver(2);
         orderService.receive(2);
 
         log.info("全部订单状态：{}", orderService.getOrders());
+        context.close();
     }
 }

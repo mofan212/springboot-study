@@ -20,7 +20,7 @@ import java.util.Map;
  * @date 2024/5/17 11:40
  */
 @Slf4j
-@Service
+@Service("orderService")
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -41,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(OrderStatus.WAIT_PAYMENT);
         order.setId(id++);
         orders.put(order.getId(), order);
+        log.info("线程名称：{}，创建了订单号为 {} 的订单", Thread.currentThread().getName(), order.getId());
         return order;
     }
 
@@ -52,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
                 .withPayload(OrderStatusChangeEvent.PAYED)
                 .setHeader("order", order)
                 .build();
-        if (!sendEvent(message, order)) {
+        if (sendEvent(message, order)) {
             log.info("线程名称：{} 支付失败, 状态异常，订单号：{}", Thread.currentThread().getName(), id);
         }
         return order;
@@ -65,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
         Message<OrderStatusChangeEvent> message = MessageBuilder.withPayload(OrderStatusChangeEvent.DELIVERY)
                 .setHeader("order", order)
                 .build();
-        if (!sendEvent(message, order)) {
+        if (sendEvent(message, order)) {
             log.info("线程名称：{} 发货失败，状态异常，订单号：{}", Thread.currentThread().getName(), id);
         }
         return order;
@@ -78,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         Message<OrderStatusChangeEvent> message = MessageBuilder.withPayload(OrderStatusChangeEvent.RECEIVED)
                 .setHeader("order", order)
                 .build();
-        if (!sendEvent(message, order)) {
+        if (sendEvent(message, order)) {
             log.info("线程名称：{} 收货失败，状态异常，订单号：{}", Thread.currentThread().getName(), id);
         }
         return order;
@@ -93,14 +94,14 @@ public class OrderServiceImpl implements OrderService {
      * 发送订单状态转换事件
      */
     private synchronized boolean sendEvent(Message<OrderStatusChangeEvent> message, Order order) {
-        boolean result = false;
+        boolean sendFailed = false;
         try {
             orderStateMachine.start();
             // 尝试恢复状态机状态
             persister.restore(orderStateMachine, order);
             // 添加延迟用于线程安全测试
             Thread.sleep(1000);
-            result = orderStateMachine.sendEvent(message);
+            sendFailed = !orderStateMachine.sendEvent(message);
             // 持久化状态机状态
             persister.persist(orderStateMachine, order);
         } catch (Exception e) {
@@ -108,6 +109,6 @@ public class OrderServiceImpl implements OrderService {
         } finally {
             orderStateMachine.stop();
         }
-        return result;
+        return sendFailed;
     }
 }
