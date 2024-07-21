@@ -5,6 +5,7 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.ResolvableType;
+import org.springframework.core.ResolvableTypeProvider;
 
 import java.io.Serial;
 import java.lang.reflect.Field;
@@ -237,6 +238,36 @@ public class ResolvableTypeTest implements WithAssertions {
         assertThat(type.toString()).isEqualTo("java.lang.String");
     }
 
+    static class MyGenericClass<T> {
+    }
+
+    static class MyGenericClass2<T> implements ResolvableTypeProvider {
+
+        private final T payload;
+
+        public MyGenericClass2(T payload) {
+            this.payload = payload;
+        }
+
+        @Override
+        public ResolvableType getResolvableType() {
+            return ResolvableType.forClassWithGenerics(MyGenericClass2.class, payload.getClass());
+        }
+    }
+
+    @Test
+    public void testForInstance() {
+        MyGenericClass<Integer> obj = new MyGenericClass<>();
+        ResolvableType type = ResolvableType.forInstance(obj);
+        // 拿不到实际的泛型
+        assertThat(type.toString()).contains("MyGenericClass<?>");
+
+        MyGenericClass2<String> object = new MyGenericClass2<>("payload");
+        type = ResolvableType.forInstance(object);
+        // 实现 ResolvableTypeProvider 后就拿得到了
+        assertThat(type.toString()).contains("MyGenericClass2<java.lang.String>");
+    }
+
     @Test
     public void testGetNested() {
         ParameterizedTypeReference<List<Map<String, List<Integer>>>> typeReference = new ParameterizedTypeReference<>() {
@@ -256,5 +287,14 @@ public class ResolvableTypeTest implements WithAssertions {
          */
         nested = type.getNested(3, Map.of(2, 0, 3, 1));
         assertThat(nested.toString()).isEqualTo("java.util.List<java.lang.Integer>");
+    }
+
+    @Test
+    public void testHasUnresolvableGenerics() {
+        ResolvableType type = ResolvableType.forClassWithGenerics(List.class, Integer.class);
+        assertThat(type.hasUnresolvableGenerics()).isFalse();
+
+        type = ResolvableType.forClass(List.class);
+        assertThat(type.hasUnresolvableGenerics()).isTrue();
     }
 }
