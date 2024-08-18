@@ -19,6 +19,7 @@
         <module>openfeign</module>
         <module>extension-point-summary</module>
         <module>statemachine</module>
+        <module>conditional</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
