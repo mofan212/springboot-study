@@ -5,16 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>indi.mofan</groupId>
-        <artifactId>springboot-study</artifactId>
+        <artifactId>conditional</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>conditional</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>study</module>
-        <module>missing-bean</module>
-    </modules>
+    <artifactId>missing-bean</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
