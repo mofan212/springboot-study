@@ -1,9 +1,9 @@
-package indi.mofan.registry.component;
+package indi.mofan.component;
 
 
 import indi.mofan.service.MyService;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class MyComponent {
-    @Autowired
-    private MyService myService;
+    @DubboReference
+    private MyService customComponent;
 }
