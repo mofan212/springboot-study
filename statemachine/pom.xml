@@ -15,14 +15,12 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <statemachine.version>4.0.0</statemachine.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.statemachine</groupId>
             <artifactId>spring-statemachine-core</artifactId>
-            <version>${statemachine.version}</version>
         </dependency>
     </dependencies>
 

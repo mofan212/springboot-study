@@ -18,22 +18,3 @@ mybatis-plus:
     # MyBatis-Plus配置日志
     # 使用默认控制台输出，不需要导入依赖
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-#{"author.name":"mofan"}
-properties:
-  my-name: "mofan"
-  age: 20
-  innerProperties:
-    integer: 212
-  default-duration: 10
-  duration-with-unit: 7d
-  duration: 60
-  # 加引号才识别为字符串，否则识别成 Double，导致找不到对应的 Convertor
-  weight: "1000.1"
-another-properties:
-  myName: "mofan212"
-  age: 21
-  innerProperties:
-    integer: 123
-person:
-  gender: "man"

@@ -1,6 +1,5 @@
 package indi.mofan.bean;
 
-import indi.mofan.Application;
 import indi.mofan.bean.lookup.AbstractBean;
 import indi.mofan.bean.lookup.PrototypeBean;
 import indi.mofan.bean.lookup.SingletonBean;
@@ -36,7 +35,7 @@ import java.util.List;
  * @author mofan
  * @date 2022/10/11 19:50
  */
-@SpringBootTest(classes = Application.class)
+@SpringBootTest
 public class BeanTest implements WithAssertions {
 
     @Autowired
@@ -57,8 +56,8 @@ public class BeanTest implements WithAssertions {
          * 使用 FactoryBean 注册的 Bean 的 name 是注册的实现类的 name
          * 如果要获取 FactoryBean 的实现类对应的 Bean，需要在 name 前使用 & 符号
          */
-        Assertions.assertTrue(context.getBean("userFactoryBean") instanceof User);
-        Assertions.assertTrue(context.getBean("&userFactoryBean") instanceof UserFactoryBean);
+        Assertions.assertInstanceOf(User.class, context.getBean("userFactoryBean"));
+        Assertions.assertInstanceOf(UserFactoryBean.class, context.getBean("&userFactoryBean"));
     }
 
     @Test

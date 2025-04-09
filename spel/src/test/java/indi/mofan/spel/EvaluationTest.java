@@ -1,6 +1,6 @@
 package indi.mofan.spel;
 
-import indi.mofan.Application;
+import indi.mofan.SPELApplication;
 import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +20,7 @@ import java.util.List;
  * @author mofan
  * @date 2022/10/18 17:44
  */
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = SPELApplication.class)
 public class EvaluationTest {
 
     @Autowired
@@ -35,7 +35,7 @@ public class EvaluationTest {
         // 给 simple 对象中的 booleanList 列表的第一个元素设置值为 false
         parser.parseExpression("booleanList[0]").setValue(context, simple, "false");
 
-        Boolean b = simple.booleanList.get(0);
+        Boolean b = simple.booleanList.getFirst();
         Assertions.assertFalse(b);
     }
 

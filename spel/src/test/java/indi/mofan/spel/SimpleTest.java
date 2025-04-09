@@ -1,6 +1,6 @@
 package indi.mofan.spel;
 
-import indi.mofan.Application;
+import indi.mofan.SPELApplication;
 import indi.mofan.spel.pojo.Inventor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author mofan
  * @date 2022/10/18 16:45
  */
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = SPELApplication.class)
 public class SimpleTest {
 
     @Autowired

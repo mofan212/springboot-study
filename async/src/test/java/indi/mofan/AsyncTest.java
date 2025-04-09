@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author mofan
  * @date 2022/10/15 10:48
  */
-@SpringBootTest(classes = Application.class)
+@SpringBootTest
 public class AsyncTest {
 
     @Autowired

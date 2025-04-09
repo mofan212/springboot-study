@@ -1,6 +1,6 @@
 package indi.mofan.spel;
 
-import indi.mofan.Application;
+import indi.mofan.SPELApplication;
 import indi.mofan.spel.config.SimpleBeanFactoryBean;
 import indi.mofan.spel.pojo.Inventor;
 import indi.mofan.spel.pojo.PlaceOfBirth;
@@ -37,7 +37,7 @@ import java.util.Map;
  * @author mofan
  * @date 2022/10/18 20:33
  */
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = SPELApplication.class)
 public class LanguageReferenceTest {
 
     @Autowired
@@ -136,7 +136,7 @@ public class LanguageReferenceTest {
         parser.parseExpression("officers['advisors'][0].placeOfBirth.country").setValue(society, "Croatia");
         Object mapValue = society.getOfficers().get(Society.Advisors);
         Assertions.assertNotNull(mapValue);
-        Assertions.assertTrue(mapValue instanceof List);
+        Assertions.assertInstanceOf(List.class, mapValue);
         Assertions.assertEquals("Croatia", ((List<Inventor>) mapValue).get(0).getPlaceOfBirth().getCountry());
     }
 
@@ -372,7 +372,7 @@ public class LanguageReferenceTest {
         // 属性名不区分大小写，因此 Members.add() 或 members.add() 都可以
         parser.parseExpression("members.add(new indi.mofan.spel.pojo.Inventor('Albert Einstein', 'German'))").getValue(society);
         Assertions.assertFalse(society.getMembers().isEmpty());
-        Inventor member = society.getMembers().get(0);
+        Inventor member = society.getMembers().getFirst();
         Assertions.assertNotNull(member);
         Assertions.assertEquals("German", inventor.getNationality());
     }
@@ -504,7 +504,7 @@ public class LanguageReferenceTest {
         // 基本语法为：.?[selectionExpression]
         List<Inventor> list = (List<Inventor>) parser.parseExpression("members.?[placeOfBirth.country == 'Croatia']").getValue(society);
         Assertions.assertNotNull(list);
-        Assertions.assertEquals(list.size(), 1);
+        Assertions.assertEquals(1, list.size());
 
         /*
          * 数组、实现了 java.lang.Iterable 或 java.util.Map 接口的数据都适用该语法
