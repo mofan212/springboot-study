@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>indi.mofan</groupId>
-        <artifactId>conditional</artifactId>
+        <artifactId>missing-bean</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>service</module>
-        <module>service-api</module>
-        <module>other-service</module>
-    </modules>
-
-    <artifactId>missing-bean</artifactId>
+    <artifactId>other-service</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -26,9 +19,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>${dubbo.version}</version>
+            <groupId>indi.mofan</groupId>
+            <artifactId>service-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
