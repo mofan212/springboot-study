@@ -1,4 +1,4 @@
-package indi.mofan;
+package indi.mofan.component;
 
 
 import indi.mofan.service.MyService;

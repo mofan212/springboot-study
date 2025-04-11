@@ -8,6 +8,8 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @author mofan
  * @date 2025/3/26 16:44
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Component;
 @Component(BeanNameConstant.CUSTOM_BEAN)
 public class CustomServiceImpl implements MyService {
 
+    public static AtomicInteger integer = new AtomicInteger(0);
+
     private InjectComponent injectComponent;
 
     @Autowired(required = false)
@@ -23,8 +27,17 @@ public class CustomServiceImpl implements MyService {
         this.injectComponent = injectComponent;
     }
 
+    public CustomServiceImpl() {
+        integer.incrementAndGet();
+    }
+
     @Override
     public String getStr() {
         return "custom " + injectComponent.getStr();
+    }
+
+    @Override
+    public Integer getInteger() {
+        return integer.get();
     }
 }
