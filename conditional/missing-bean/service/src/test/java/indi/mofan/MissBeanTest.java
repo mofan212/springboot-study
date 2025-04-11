@@ -22,6 +22,6 @@ public class MissBeanTest implements WithAssertions {
         MySpringComponent component = context.getBean(MySpringComponent.class);
         assertThat(component).isNotNull()
                 .extracting(MySpringComponent::getStr)
-                .isEqualTo("customInject");
+                .isEqualTo("custom Inject");
     }
 }

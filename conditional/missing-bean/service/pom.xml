@@ -8,9 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>service</name>
-    <packaging>pom</packaging>
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
