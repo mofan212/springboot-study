@@ -6,8 +6,5 @@ package indi.mofan.service;
  * @date 2025/3/26 15:34
  */
 public interface MyService {
-
     String getStr();
-
-    Integer getInteger();
 }
