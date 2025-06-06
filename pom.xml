@@ -19,6 +19,7 @@
         <module>extension-point-summary</module>
         <module>statemachine</module>
         <module>conditional</module>
+        <module>mvc</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
