@@ -20,6 +20,7 @@
         <module>statemachine</module>
         <module>conditional</module>
         <module>mvc</module>
+        <module>sse</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
