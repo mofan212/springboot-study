@@ -25,7 +25,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
+        <version>3.5.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>indi.mofan</groupId>
@@ -35,9 +35,9 @@
     <description>study springboot</description>
     <properties>
         <java.version>21</java.version>
-        <commons.lang3.version>3.13.0</commons.lang3.version>
+        <commons.lang3.version>3.18.0</commons.lang3.version>
         <commons.collections4.version>4.4</commons.collections4.version>
-        <commons.io.version>2.13.0</commons.io.version>
+        <commons.io.version>2.20.0</commons.io.version>
         <mybatis.plus.version>3.5.5</mybatis.plus.version>
         <dubbo.version>3.3.4</dubbo.version>
         <spring-cloud-nacos.version>2023.0.3.2</spring-cloud-nacos.version>
