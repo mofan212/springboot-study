@@ -59,7 +59,7 @@ public class BeanFactoryTest implements WithAssertions {
 
         AutowireCapableBeanFactory beanFactory = context.getAutowireCapableBeanFactory();
         // 使用 AutowireCapableBeanFactory 创建一个对象
-        Parent parent = (Parent) beanFactory.createBean(Parent.class, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, false);
+        Parent parent = (Parent) beanFactory.autowire(Parent.class, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, false);
         Children children = context.getBean(Children.class);
         // 将 children 注入到了 parent 对象中
         assertThat(parent.getChildren()).isSameAs(children);

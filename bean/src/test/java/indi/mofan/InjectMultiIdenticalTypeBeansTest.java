@@ -165,6 +165,7 @@ public class InjectMultiIdenticalTypeBeansTest implements WithAssertions {
     }
 
     @Test
+    @SuppressWarnings("rawtypes")
     public void testInjectCollection() {
         List<Class> serviceClazzList = List.of(SecondServiceImpl.class, ThirdServiceImpl.class, FirstServiceImpl.class);
         // 在 Configuration 类中组合使用 @Bean 和 @Order 无效，在实现类上使用 @Order 也无效，可以实现 Ordered 接口

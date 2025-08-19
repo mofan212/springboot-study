@@ -137,7 +137,7 @@ public class LanguageReferenceTest {
         Object mapValue = society.getOfficers().get(Society.Advisors);
         Assertions.assertNotNull(mapValue);
         Assertions.assertInstanceOf(List.class, mapValue);
-        Assertions.assertEquals("Croatia", ((List<Inventor>) mapValue).get(0).getPlaceOfBirth().getCountry());
+        Assertions.assertEquals("Croatia", ((List<Inventor>) mapValue).getFirst().getPlaceOfBirth().getCountry());
     }
 
     @Test

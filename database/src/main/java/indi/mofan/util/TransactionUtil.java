@@ -16,14 +16,7 @@ public class TransactionUtil {
         }
     }
 
-    private static class DoSomethingTransactionComplete implements TransactionSynchronization {
-
-        private final Runnable runnable;
-
-        public DoSomethingTransactionComplete(Runnable runnable) {
-            this.runnable = runnable;
-        }
-
+    private record DoSomethingTransactionComplete(Runnable runnable) implements TransactionSynchronization {
         @Override
         public void afterCompletion(int status) {
             // 事务提交成功才回调

@@ -106,7 +106,7 @@ public class InvalidTransactionTest {
             studentService.doAfterComplete(student);
             Assertions.assertNotNull(studentService.selectById(student.getId()));
         } catch (Exception e) {
-            Assertions.assertTrue(e instanceof ArithmeticException);
+            Assertions.assertInstanceOf(ArithmeticException.class, e);
         }
     }
 }

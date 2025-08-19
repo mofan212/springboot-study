@@ -221,6 +221,7 @@ public class LambdaSafeTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testNoException() {
         // 回调函数有多个泛型
         FirstFunction function = i -> i + 1;

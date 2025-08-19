@@ -24,6 +24,7 @@ public class ArthasDemo {
     private static final String A = "A";
     private static final String B = "B";
 
+    @SuppressWarnings("unchecked")
     public void mock() {
         redisTemplate = Mockito.mock(StringRedisTemplate.class);
         HashOperations<String, Object, Object> hash = Mockito.mock(HashOperations.class);
@@ -90,6 +91,15 @@ public class ArthasDemo {
     }
 
     private void deadLock() {
+        Thread thread = buildDeadLockThreadOne();
+        thread.start();
+
+        Thread t2 = buildDeadLockThreadTwo();
+        t2.setName("死锁二号");
+        t2.start();
+    }
+
+    private static Thread buildDeadLockThreadOne() {
         Thread thread = new Thread(() -> {
             synchronized (A) {
                 System.out.println("线程一获取到资源A");
@@ -109,9 +119,11 @@ public class ArthasDemo {
             }
         });
         thread.setName("死锁一号");
-        thread.start();
+        return thread;
+    }
 
-        Thread t2 = new Thread(() -> {
+    private static Thread buildDeadLockThreadTwo() {
+        return new Thread(() -> {
             synchronized (B) {
                 System.out.println("线程二获取到资源B");
                 try {
@@ -129,8 +141,6 @@ public class ArthasDemo {
                 }
             }
         });
-        t2.setName("死锁二号");
-        t2.start();
     }
 }
 

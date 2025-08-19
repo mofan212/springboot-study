@@ -6,6 +6,8 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.ResolvableTypeProvider;
 
+import java.io.Serial;
+
 /**
  * @author mofan
  * @date 2022/10/17 21:21
@@ -13,6 +15,7 @@ import org.springframework.core.ResolvableTypeProvider;
 @Getter
 public class MutationEvent<T> extends ApplicationEvent implements ResolvableTypeProvider {
 
+    @Serial
     private static final long serialVersionUID = -2718823625228147843L;
 
     private final T source;

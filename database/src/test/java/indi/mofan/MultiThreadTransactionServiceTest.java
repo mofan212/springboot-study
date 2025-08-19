@@ -33,7 +33,7 @@ public class MultiThreadTransactionServiceTest {
             service.transactionAsyncFail();
             Assertions.fail();
         } catch (Exception e) {
-            Assertions.assertTrue(e instanceof RuntimeException);
+            Assertions.assertInstanceOf(RuntimeException.class, e);
         }
         // 插入两条数据，存在异常，数据没有回滚
         Assertions.assertEquals(1L, studentService.selectByCount());

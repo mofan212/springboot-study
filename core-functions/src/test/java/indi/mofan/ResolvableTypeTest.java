@@ -156,6 +156,7 @@ public class ResolvableTypeTest implements WithAssertions {
 
     @Test
     @SneakyThrows
+    @SuppressWarnings("rawtypes")
     public void testTypeSystem() {
         // 获取类的类型
         Class<?> clazz = Class.forName("java.util.List");

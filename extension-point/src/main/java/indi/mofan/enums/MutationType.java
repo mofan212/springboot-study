@@ -18,5 +18,5 @@ public enum MutationType {
     /**
      * 删除
      */
-    DELETED;
+    DELETED
 }
