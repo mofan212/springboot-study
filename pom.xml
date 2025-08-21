@@ -20,6 +20,7 @@
         <module>conditional</module>
         <module>mvc</module>
         <module>sse</module>
+        <module>expression-annotation</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

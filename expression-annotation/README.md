@@ -1,0 +1,1 @@
+原视频链接: [告别CRUD，代码实战自定义注解注册Spring Bean](https://www.bilibili.com/video/BV1FQ4y1H7xs/)
