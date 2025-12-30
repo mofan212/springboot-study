@@ -8,10 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>utils-study</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>utils-study</name>
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
     </properties>
 
 </project>

@@ -8,10 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>arthas-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>arthas-demo</name>
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
     </properties>
     <dependencies>
         <dependency>

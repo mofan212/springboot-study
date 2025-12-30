@@ -6,7 +6,6 @@ import indi.mofan.log.convert.UpdateOrderConvert;
 import indi.mofan.pojo.CreateOrUpdateOrder;
 import indi.mofan.pojo.SaveOrder;
 import indi.mofan.pojo.UpdateOrder;
-import org.assertj.core.util.CanIgnoreReturnValue;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
  * @date 2022/11/18 23:11
  */
 @Service
-@CanIgnoreReturnValue
 public class OrderService {
 
     @RecordOperate(desc = "保存订单", convert = SaveOrderConvert.class)

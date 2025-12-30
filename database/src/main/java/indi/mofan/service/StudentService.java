@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import indi.mofan.dao.StudentDao;
 import indi.mofan.entity.Student;
 import indi.mofan.util.TransactionUtil;
-import org.assertj.core.util.CanIgnoreReturnValue;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @date 2022/11/9 22:37
  */
 @Service
-@CanIgnoreReturnValue
 public class StudentService {
     @Autowired
     private StudentDao studentDao;

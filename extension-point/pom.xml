@@ -8,9 +8,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>extension-point</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>extension-point</name>
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
     </properties>
 </project>
