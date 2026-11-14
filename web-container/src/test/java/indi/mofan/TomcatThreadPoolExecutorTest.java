@@ -52,7 +52,12 @@ public class TomcatThreadPoolExecutorTest {
                 }
             });
         }
-        Thread.currentThread().join();
+        executor.shutdown();
+        try {
+            Assertions.assertTrue(executor.awaitTermination(15, TimeUnit.SECONDS));
+        } finally {
+            executor.shutdownNow();
+        }
     }
 
     private void logStatus(ThreadPoolExecutor executor, String name) {

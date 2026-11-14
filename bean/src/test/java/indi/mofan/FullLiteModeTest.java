@@ -108,7 +108,12 @@ public class FullLiteModeTest implements WithAssertions {
     public void testEmptyConfig() {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(EmptyConfig.class);
         EmptyConfig config = context.getBean(EmptyConfig.class);
-        // 被 @Configuration 注解标记就会生成代理对象
-        assertThat(config.getClass().getName()).contains(LABEL_VALUE);
+        /*
+         * Spring Framework 6.2.4 起（并回移至 6.1.18），没有声明或继承非静态 @Bean 方法的
+         * 非抽象 @Configuration 类会按 Lite 模式处理，不再生成 CGLIB 增强子类。
+         * 参考：https://github.com/spring-projects/spring-framework/issues/34486
+         * 回移：https://github.com/spring-projects/spring-framework/issues/34487
+         */
+        assertThat(config.getClass()).isEqualTo(EmptyConfig.class);
     }
 }

@@ -10,7 +10,10 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -58,15 +61,21 @@ public class MultiThreadTransactionService {
         return insert;
     }
 
-    public void transactionAsyncSuccess_1() {
+    /**
+     * 异步协调多个线程的事务
+     *
+     * @return 全部子线程完成提交或回滚后的通知
+     */
+    public CompletableFuture<Void> transactionAsyncSuccess_1() {
         int size = 10;
         CyclicBarrier barrier = new CyclicBarrier(size);
         AtomicBoolean rollback = new AtomicBoolean(false);
+        List<CompletableFuture<Void>> futures = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             int currentNum = i;
             // 手动开启事务
-            new Thread(() -> {
+            futures.add(CompletableFuture.runAsync(() -> {
                 TransactionStatus transaction = transactionManager.getTransaction(transactionDefinition);
                 try {
                     // 如果插入数据 < 1 就抛出异常
@@ -92,7 +101,8 @@ public class MultiThreadTransactionService {
                 }
                 // 否则提交事务
                 transactionManager.commit(transaction);
-            }).start();
+            }, task -> new Thread(task).start()));
         }
+        return CompletableFuture.allOf(futures.toArray(CompletableFuture<?>[]::new));
     }
 }

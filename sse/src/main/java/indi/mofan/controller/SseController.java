@@ -1,6 +1,7 @@
 package indi.mofan.controller;
 
 
+import jakarta.annotation.PreDestroy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -18,6 +19,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SseController {
 
     ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+
+    @PreDestroy
+    public void shutdown() {
+        executor.shutdownNow();
+    }
 
     @GetMapping("/sse")
     public SseEmitter sse() {

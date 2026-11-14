@@ -10,6 +10,17 @@
     <artifactId>extension-point</artifactId>
     <name>extension-point</name>
     <properties>
+        <start-class>indi.mofan.ExtensionPointApplication</start-class>
         <java.version>25</java.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

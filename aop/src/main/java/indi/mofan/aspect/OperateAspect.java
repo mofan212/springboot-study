@@ -1,7 +1,5 @@
 package indi.mofan.aspect;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import indi.mofan.log.OperateLogDo;
 import indi.mofan.log.RecordOperate;
 import indi.mofan.log.convert.Convert;
@@ -17,6 +15,8 @@ import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -72,7 +72,7 @@ public class OperateAspect {
 
                 ObjectMapper mapper = new ObjectMapper();
                 System.out.println("operate log " + mapper.writeValueAsString(operateLogDo));
-            } catch (InstantiationException | IllegalAccessException | JsonProcessingException |
+            } catch (InstantiationException | IllegalAccessException | JacksonException |
                      InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }

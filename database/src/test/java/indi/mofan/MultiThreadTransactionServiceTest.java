@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * <a href = "https://www.bilibili.com/video/BV1Td4y1b7DQ/">link</a>
  *
@@ -40,8 +42,9 @@ public class MultiThreadTransactionServiceTest {
     }
 
     @Test
-    public void testTransactionAsyncSuccess_1() {
-        service.transactionAsyncSuccess_1();
+    public void testTransactionAsyncSuccess_1() throws Exception {
+        // 等待子线程完成事务，再查询和清理数据
+        service.transactionAsyncSuccess_1().get(10, TimeUnit.SECONDS);
         Assertions.assertEquals(0, studentService.selectByCount());
     }
 

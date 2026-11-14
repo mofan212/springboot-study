@@ -1,17 +1,16 @@
 package indi.mofan.source;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.springframework.boot.env.PropertySourceLoader;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,11 +36,9 @@ public class JsonPropertySourceLoader implements PropertySourceLoader {
         JsonNode jsonNode = mapper.readTree(content);
 
         Map<String, Object> map = new HashMap<>(16);
-        Iterator<String> iterator = jsonNode.fieldNames();
-        while (iterator.hasNext()) {
-            String next = iterator.next();
+        for (String next : jsonNode.propertyNames()) {
             //将 JSON 的键值对读出来，放入到 map 中
-            map.put(next, jsonNode.get(next).asText());
+            map.put(next, jsonNode.get(next).asString());
         }
         return Collections.singletonList(new MapPropertySource("jsonPropertySource", map));
     }
