@@ -8,6 +8,7 @@
         <module>async</module>
         <module>spel</module>
         <module>database</module>
+        <module>spring-boot-data</module>
         <module>aop</module>
         <module>arthas-demo</module>
         <module>utils-study</module>
